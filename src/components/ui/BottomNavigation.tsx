@@ -1,25 +1,27 @@
 'use client';
 
 import React from 'react';
-import { Home, Compass, Plus, Swords, User } from 'lucide-react';
+import { Home, Plus, Swords, User, Bell } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface BottomNavigationProps {
   currentView: string;
   onViewChange: (view: string) => void;
   onCreatePostClick: () => void;
+  unreadNotificationsCount?: number;
 }
 
 export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   currentView,
   onViewChange,
   onCreatePostClick,
+  unreadNotificationsCount = 0
 }) => {
   const tabs = [
     { id: 'home', icon: Home, label: 'Home' },
-    { id: 'explore', icon: Compass, label: 'Explore' },
     { id: 'add', icon: Plus, label: 'Create', special: true },
     { id: 'battles', icon: Swords, label: 'Battles' },
+    { id: 'notifications', icon: Bell, label: 'Alerts', unreadBadge: true },
     { id: 'profile', icon: User, label: 'Profile' },
   ];
 
@@ -70,13 +72,20 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 />
               )}
 
-              <Icon
-                className={`h-5.5 w-5.5 mb-1 transition-all duration-250 ${
-                  isActive 
-                    ? 'text-purple stroke-[2.5px] drop-shadow-[0_0_5px_rgba(124,58,237,0.6)]' 
-                    : 'text-gray-text hover:text-white'
-                }`}
-              />
+              <div className="relative">
+                <Icon
+                  className={`h-5.5 w-5.5 mb-1 transition-all duration-250 ${
+                    isActive 
+                      ? 'text-purple stroke-[2.5px] drop-shadow-[0_0_5px_rgba(124,58,237,0.6)]' 
+                      : 'text-gray-text hover:text-white'
+                  }`}
+                />
+                {tab.unreadBadge && unreadNotificationsCount > 0 && (
+                  <span className="absolute -top-1 -right-1.5 h-3.5 w-3.5 bg-red-500 rounded-full text-[7.5px] font-black text-white flex items-center justify-center border border-[#0B0B12] shadow-md animate-pulse">
+                    {unreadNotificationsCount}
+                  </span>
+                )}
+              </div>
               
               <span
                 className={`text-[9px] font-black tracking-wider transition-colors ${

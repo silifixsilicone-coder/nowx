@@ -29,6 +29,7 @@ import BattleArenaPage from '@/components/BattleArenaPage';
 import BattleFeedPage from '@/components/BattleFeedPage';
 import ProfilePage from '@/components/ProfilePage';
 import LoginPage from '@/components/LoginPage';
+import NotificationsPage from '@/components/NotificationsPage';
 
 // Mock Data
 import {
@@ -66,6 +67,7 @@ export default function Home() {
   };
 
   const [currentView, setCurrentView] = useState<string>('home');
+  const [unreadNotificationsCount, setUnreadNotificationsCount] = useState<number>(4);
   const [posts, setPosts] = useState<Post[]>(mockPosts);
   const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -129,6 +131,7 @@ export default function Home() {
           onViewChange={setCurrentView}
           activeServerId={activeServerId}
           onServerChange={setActiveServerId}
+          unreadNotificationsCount={unreadNotificationsCount}
         />
 
         {/* 3. Central dynamic viewport panel container */}
@@ -359,67 +362,14 @@ export default function Home() {
                 </div>
               )}
 
-              {/* --- VIEW: EXPLORE (Visual Search Collage Grid) --- */}
-              {currentView === 'explore' && (
-                <div className="space-y-6">
-                  {/* Category tabs */}
-                  <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1.5 border-b border-white/5">
-                    {['all', 'cyberpunk', 'dev', 'creative'].map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => setExploreCategory(cat)}
-                        className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
-                          exploreCategory === cat
-                            ? 'bg-purple text-white shadow-[0_0_15px_rgba(124,58,237,0.4)] border border-purple'
-                            : 'bg-white/5 border border-white/5 text-gray-text hover:text-white'
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Collage grid visual posts */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 auto-rows-[160px] sm:auto-rows-[200px]">
-                    {[
-                      { id: 1, title: 'Digital Utopia', likes: '1.4k', comments: 84, creator: 'neon_rider', category: 'cyberpunk', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&h=500&fit=crop' },
-                      { id: 2, title: 'Framer Neo Interface', likes: '980', comments: 42, creator: 'framer_wizard', category: 'dev', url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&h=500&fit=crop' },
-                      { id: 3, title: 'Abstract Dreams', likes: '2.1k', comments: 120, creator: 'tailwind_queen', category: 'creative', url: 'https://images.unsplash.com/photo-1547891654-e66ed7edd96c?w=500&h=500&fit=crop' },
-                      { id: 4, title: 'Matrix Rain Streams', likes: '3.2k', comments: 245, creator: 'rust_ace', category: 'dev', url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&h=500&fit=crop' },
-                      { id: 5, title: 'Neon Core Shader v4', likes: '1.1k', comments: 56, creator: 'neon_rider', category: 'cyberpunk', url: 'https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=500&h=500&fit=crop' },
-                      { id: 6, title: 'Geometrical Synth', likes: '850', comments: 31, creator: 'tailwind_queen', category: 'creative', url: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=500&h=500&fit=crop' },
-                      { id: 7, title: 'Retro Coding Board', likes: '1.5k', comments: 92, creator: 'rust_ace', category: 'dev', url: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&h=500&fit=crop' },
-                      { id: 8, title: 'Cybernetic Portraiture', likes: '2.7k', comments: 182, creator: 'neon_rider', category: 'cyberpunk', url: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=500&h=500&fit=crop' },
-                      { id: 9, title: 'Volumetric Lights Engine', likes: '1.8k', comments: 74, creator: 'framer_wizard', category: 'creative', url: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=500&h=500&fit=crop' },
-                    ]
-                      .filter(item => exploreCategory === 'all' || item.category === exploreCategory)
-                      .map((item, idx) => {
-                        // Alternate large columns for Instagram explore style collage
-                        const isLarge = idx % 5 === 0;
-                        return (
-                          <motion.div
-                            key={item.id}
-                            whileHover={{ scale: 1.02 }}
-                            className={`relative rounded-2xl overflow-hidden group cursor-pointer border border-white/5 shadow-md bg-white/5 ${
-                              isLarge ? 'col-span-2 row-span-2' : ''
-                            }`}
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={item.url} alt={item.title} className="w-full h-full object-cover" />
-                            {/* Overlay details */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-end">
-                              <span className="text-[10px] font-black uppercase text-pink tracking-widest block mb-0.5">@{item.creator}</span>
-                              <span className="text-xs font-black text-white block mb-2">{item.title}</span>
-                              <div className="flex gap-3 text-[10px] font-bold text-gray-text">
-                                <span>❤️ {item.likes}</span>
-                                <span>💬 {item.comments}</span>
-                              </div>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
-                  </div>
-                </div>
+              {/* --- VIEW: NOTIFICATIONS (Instagram/Threads/X Style Alerts) --- */}
+              {currentView === 'notifications' && (
+                <NotificationsPage
+                  onBack={() => setCurrentView('home')}
+                  onViewChange={setCurrentView}
+                  unreadCount={unreadNotificationsCount}
+                  setUnreadCount={setUnreadNotificationsCount}
+                />
               )}
 
               {/* --- VIEW: WATCH (TikTok Vertical video swipe) --- */}
@@ -847,6 +797,7 @@ export default function Home() {
         currentView={currentView}
         onViewChange={setCurrentView}
         onCreatePostClick={() => setCurrentView('create_post')}
+        unreadNotificationsCount={unreadNotificationsCount}
       />
 
       {/* 5. Modals & Overlays */}

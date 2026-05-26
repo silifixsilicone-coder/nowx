@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Home, Tv, MessageSquare, User, Compass, Swords, Flame, Settings, Sparkles } from 'lucide-react';
+import { Home, Tv, MessageSquare, User, Bell, Swords, Flame, Settings, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { mockDiscordServers, currentUser } from '@/data/mockData';
 
@@ -10,6 +10,7 @@ interface SidebarProps {
   onViewChange: (view: string) => void;
   activeServerId?: string;
   onServerChange?: (serverId: string) => void;
+  unreadNotificationsCount?: number;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -17,10 +18,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onViewChange,
   activeServerId = 'server_react',
   onServerChange,
+  unreadNotificationsCount = 0
 }) => {
   const primaryNavs = [
     { id: 'home', icon: Home, label: 'Home Feed' },
-    { id: 'explore', icon: Compass, label: 'Explore Space' },
+    { id: 'notifications', icon: Bell, label: 'Notifications' },
     { id: 'watch', icon: Tv, label: 'ReactTV Shorts' },
     { id: 'battles', icon: Swords, label: 'Creator Battles' },
     { id: 'chat', icon: MessageSquare, label: 'Discord Spaces' },
@@ -59,7 +61,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
-                <Icon className={`h-5 w-5 ${isActive ? 'text-purple' : 'text-gray-text'}`} />
+                <div className="relative">
+                  <Icon className={`h-5 w-5 ${isActive ? 'text-purple' : 'text-gray-text'}`} />
+                  {nav.id === 'notifications' && unreadNotificationsCount > 0 && (
+                    <span className="absolute -top-1 -right-1.5 h-3.5 w-3.5 bg-red-500 rounded-full text-[7.5px] font-black text-white flex items-center justify-center border border-[#0B0B12] shadow-md animate-pulse">
+                      {unreadNotificationsCount}
+                    </span>
+                  )}
+                </div>
                 <span>{nav.label}</span>
               </button>
             );
