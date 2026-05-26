@@ -142,3 +142,119 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* ============================================================== */
+/* ☀️ LIGHT THEME ADAPTER FOR INSTAGRAM-LIKE MINIMAL UI */
+/* ============================================================== */
+:root.light {
+  --background: #F5F5F5;
+  --foreground: #111111;
+  --card: #FFFFFF;
+  --text: #111111;
+  --gray-text: #71717A;
+}
+
+:root.light body {
+  background-color: #F5F5F5 !important;
+  color: #111111 !important;
+}
+
+/* Text overrides */
+:root.light .text-white {
+  color: #111111 !important;
+}
+:root.light .text-white\/90 {
+  color: rgba(17, 17, 17, 0.9) !important;
+}
+:root.light .text-white\/95 {
+  color: rgba(17, 17, 17, 0.95) !important;
+}
+:root.light .text-white\/80 {
+  color: rgba(17, 17, 17, 0.8) !important;
+}
+:root.light .text-white\/90.text-gradient {
+  background: linear-gradient(135deg, #FF2E93 0%, #7C3AED 50%, #FF8A00 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Background overrides */
+:root.light .bg-\[\#0B0B12\] {
+  background-color: #F5F5F5 !important;
+}
+:root.light .bg-\[\#12131C\] {
+  background-color: #FFFFFF !important;
+}
+:root.light .bg-\[\#1A1D29\] {
+  background-color: #EBEBEF !important;
+}
+:root.light .bg-\[\#0B0B12\]\/85 {
+  background-color: rgba(245, 245, 245, 0.85) !important;
+}
+:root.light .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+:root.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+:root.light .bg-white\/\[0\.01\] {
+  background-color: rgba(0, 0, 0, 0.01) !important;
+}
+:root.light .bg-white\/\[0\.02\] {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+:root.light .bg-white\/\[0\.05\] {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+:root.light .bg-black\/20 {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+:root.light .bg-black\/25 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+:root.light .bg-black\/30 {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+:root.light .bg-black\/40 {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+:root.light .bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Border overrides */
+:root.light .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.05) !important;
+}
+:root.light .border-white\/8 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+:root.light .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+:root.light .border-purple\/35 {
+  border-color: rgba(124, 58, 237, 0.35) !important;
+}
+:root.light .border-pink\/35 {
+  border-color: rgba(255, 46, 147, 0.35) !important;
+}
+
+/* Glassmorphism overrides */
+:root.light .glass-effect {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+:root.light .glass-effect-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 248, 250, 0.95) 100%) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06) !important;
+}
+:root.light .glass-input {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #111111 !important;
+}
+:root.light .glass-input:focus {
+  border-color: var(--purple) !important;
+}
+

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Zap,
   Flame,
@@ -16,7 +16,13 @@ import {
   ChevronRight,
   ShieldCheck,
   Target,
-  Gamepad2
+  Gamepad2,
+  Settings,
+  X,
+  Bell,
+  Lock,
+  LogOut,
+  Monitor
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { currentUser, mockPosts, mockUsers, Post, Comment } from '@/data/mockData';
@@ -33,6 +39,45 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onBack, onPostClick, o
   const [xp, setXp] = useState(2400);
   const xpMax = 3000;
   const level = 24;
+
+  // Settings State variables
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light' | 'system'>('dark');
+  const [pushNotify, setPushNotify] = useState(true);
+  const [mentionNotify, setMentionNotify] = useState(true);
+  const [privateAccount, setPrivateAccount] = useState(false);
+  const [anonymousMode, setAnonymousMode] = useState(false);
+
+  // Load and apply theme on component mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('reactverse-theme') as 'dark' | 'light' | 'system' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      applyTheme(savedTheme);
+    }
+  }, []);
+
+  const applyTheme = (targetTheme: 'dark' | 'light' | 'system') => {
+    if (targetTheme === 'light') {
+      document.documentElement.classList.add('light');
+    } else if (targetTheme === 'dark') {
+      document.documentElement.classList.remove('light');
+    } else {
+      // System Default check
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.add('light');
+      }
+    }
+  };
+
+  const handleThemeChange = (newTheme: 'dark' | 'light' | 'system') => {
+    setTheme(newTheme);
+    localStorage.setItem('reactverse-theme', newTheme);
+    applyTheme(newTheme);
+  };
 
   // Curated list of gaming/community achievements for the user
   const badges = [
@@ -96,7 +141,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onBack, onPostClick, o
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 pb-24 md:pb-6 select-none">
+    <div className="max-w-3xl mx-auto space-y-6 pb-24 md:pb-6 select-none relative">
       
       {/* 1. Header Navigation Bar */}
       <div className="flex items-center justify-between pb-2 border-b border-white/5">
@@ -117,6 +162,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onBack, onPostClick, o
           </div>
         </div>
         
+        {/* Top Right Header Action buttons */}
         <div className="flex items-center gap-2">
           <button
             onClick={handleShareProfile}
@@ -126,14 +172,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onBack, onPostClick, o
             <span className="hidden sm:inline">Share Space</span>
           </button>
           
-          {onLogout && (
-            <button
-              onClick={onLogout}
-              className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-pink hover:text-white border border-pink/35 hover:bg-pink/10 px-4 py-2 rounded-xl transition-all cursor-pointer shadow-md bg-pink/5"
-            >
-              <span>Sign Out 🚪</span>
-            </button>
-          )}
+          <button
+            onClick={() => setIsSettingsOpen(true)}
+            className="flex items-center justify-center p-2 rounded-xl border border-white/10 bg-white/5 text-gray-text hover:text-white hover:bg-white/10 transition-all cursor-pointer shadow-md"
+            title="Profile Settings"
+          >
+            <Settings className="h-4.5 w-4.5 animate-spin" style={{ animationDuration: '6s' }} />
+          </button>
         </div>
       </div>
 
@@ -502,6 +547,200 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onBack, onPostClick, o
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* ============================================================== */}
+      {/* ⚙️ RESPONSIVE INSTAGRAM-STYLE SETTINGS BOTTOM SHEET / MODAL */}
+      {/* ============================================================== */}
+      <AnimatePresence>
+        {isSettingsOpen && (
+          <>
+            {/* Modal Backdrop overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSettingsOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 cursor-pointer"
+            />
+
+            {/* Slide up panel / Centered modal sheet */}
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              className="fixed bottom-0 left-0 right-0 md:top-1/2 md:left-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md md:w-full z-50 bg-[#12131C] border border-white/10 rounded-t-[32px] md:rounded-[32px] p-6 shadow-2xl overflow-y-auto no-scrollbar max-h-[85vh] md:max-h-none select-none text-white"
+            >
+              {/* Mobile swipe drawer touch handle indicator */}
+              <div className="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-5 md:hidden cursor-pointer" onClick={() => setIsSettingsOpen(false)} />
+
+              {/* Settings Header title bar */}
+              <div className="flex justify-between items-center border-b border-white/5 pb-3 mb-5">
+                <div className="flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-purple" />
+                  <span className="text-base font-black tracking-wide">Profile Settings</span>
+                </div>
+                <button
+                  onClick={() => setIsSettingsOpen(false)}
+                  className="p-1.5 rounded-xl border border-white/10 bg-white/5 text-gray-text hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* 1. APPEARANCE THEME SELECTOR SECTION */}
+                <div className="space-y-3">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-pink block">Appearance</span>
+                  
+                  {/* Modern three-pill selection block */}
+                  <div className="grid grid-cols-3 gap-2 bg-white/5 p-1 rounded-2xl border border-white/5">
+                    {[
+                      { id: 'dark', label: 'Dark Mode 🌙', icon: Flame },
+                      { id: 'light', label: 'Light Mode ☀️', icon: Sparkles },
+                      { id: 'system', label: 'System Default 💻', icon: Monitor },
+                    ].map((opt) => {
+                      const isActive = theme === opt.id;
+                      return (
+                        <button
+                          key={opt.id}
+                          onClick={() => handleThemeChange(opt.id as any)}
+                          className={`flex flex-col items-center justify-center py-2.5 rounded-xl text-[9px] font-black uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                            isActive
+                              ? 'bg-purple text-white shadow-[0_0_12px_rgba(124,58,237,0.4)] border border-purple'
+                              : 'text-gray-text hover:text-white hover:bg-white/5'
+                          }`}
+                        >
+                          <span className="text-center leading-normal">{opt.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 2. NOTIFICATIONS CONFIGURATION SECTION */}
+                <div className="space-y-3">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-purple block">Notifications</span>
+                  
+                  {/* Push notifications option */}
+                  <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="flex items-center gap-3">
+                      <Bell className="h-4.5 w-4.5 text-purple" />
+                      <div>
+                        <span className="text-xs font-bold text-white block">Push Notifications</span>
+                        <span className="text-[9px] text-gray-text block">All community alerts & votes</span>
+                      </div>
+                    </div>
+                    {/* iOS style smooth transition toggle switch */}
+                    <button 
+                      onClick={() => setPushNotify(!pushNotify)}
+                      className={`w-11 h-6 rounded-full p-1 transition-colors duration-300 focus:outline-none flex items-center cursor-pointer ${
+                        pushNotify ? 'bg-purple' : 'bg-white/10'
+                      }`}
+                    >
+                      <div 
+                        className={`w-4 h-4 rounded-full bg-white transition-transform duration-300 shadow-md ${
+                          pushNotify ? 'translate-x-5' : 'translate-x-0'
+                        }`} 
+                      />
+                    </button>
+                  </div>
+
+                  {/* Direct Mentions option */}
+                  <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="flex items-center gap-3">
+                      <MessageSquare className="h-4.5 w-4.5 text-pink" />
+                      <div>
+                        <span className="text-xs font-bold text-white block">Roast Mentions</span>
+                        <span className="text-[9px] text-gray-text block">Alerts on direct reply threads</span>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setMentionNotify(!mentionNotify)}
+                      className={`w-11 h-6 rounded-full p-1 transition-colors duration-300 focus:outline-none flex items-center cursor-pointer ${
+                        mentionNotify ? 'bg-pink' : 'bg-white/10'
+                      }`}
+                    >
+                      <div 
+                        className={`w-4 h-4 rounded-full bg-white transition-transform duration-300 shadow-md ${
+                          mentionNotify ? 'translate-x-5' : 'translate-x-0'
+                        }`} 
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* 3. PRIVACY & SECURITY SECTION */}
+                <div className="space-y-3">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-orange block">Privacy & Security</span>
+                  
+                  {/* Private account option */}
+                  <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="flex items-center gap-3">
+                      <Lock className="h-4.5 w-4.5 text-orange" />
+                      <div>
+                        <span className="text-xs font-bold text-white block">Private Space</span>
+                        <span className="text-[9px] text-gray-text block">Only followers see your feed grid</span>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setPrivateAccount(!privateAccount)}
+                      className={`w-11 h-6 rounded-full p-1 transition-colors duration-300 focus:outline-none flex items-center cursor-pointer ${
+                        privateAccount ? 'bg-orange' : 'bg-white/10'
+                      }`}
+                    >
+                      <div 
+                        className={`w-4 h-4 rounded-full bg-white transition-transform duration-300 shadow-md ${
+                          privateAccount ? 'translate-x-5' : 'translate-x-0'
+                        }`} 
+                      />
+                    </button>
+                  </div>
+
+                  {/* Anonymous roast toggle */}
+                  <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/5 border border-white/5">
+                    <div className="flex items-center gap-3">
+                      <Target className="h-4.5 w-4.5 text-cyan-400" />
+                      <div>
+                        <span className="text-xs font-bold text-white block">Anonymous Roast Mode</span>
+                        <span className="text-[9px] text-gray-text block">Hides avatar on published roasts</span>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setAnonymousMode(!anonymousMode)}
+                      className={`w-11 h-6 rounded-full p-1 transition-colors duration-300 focus:outline-none flex items-center cursor-pointer ${
+                        anonymousMode ? 'bg-cyan-400' : 'bg-white/10'
+                      }`}
+                    >
+                      <div 
+                        className={`w-4 h-4 rounded-full bg-white transition-transform duration-300 shadow-md ${
+                          anonymousMode ? 'translate-x-5' : 'translate-x-0'
+                        }`} 
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* 4. LOGOUT DANGER ACTION SECTION */}
+                {onLogout && (
+                  <div className="pt-2 border-t border-white/5">
+                    <button
+                      onClick={() => {
+                        setIsSettingsOpen(false);
+                        onLogout();
+                      }}
+                      className="w-full py-3.5 rounded-2xl text-xs font-black uppercase tracking-widest text-pink bg-pink/10 border border-pink/25 hover:bg-pink hover:text-white transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      <span>Log Out Account</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sparkles,
@@ -41,6 +41,30 @@ import {
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  // Load and apply theme on first boot mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('reactverse-theme') as 'dark' | 'light' | 'system' | null;
+    if (savedTheme) {
+      applyGlobalTheme(savedTheme);
+    }
+  }, []);
+
+  const applyGlobalTheme = (targetTheme: 'dark' | 'light' | 'system') => {
+    if (targetTheme === 'light') {
+      document.documentElement.classList.add('light');
+    } else if (targetTheme === 'dark') {
+      document.documentElement.classList.remove('light');
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.add('light');
+      }
+    }
+  };
+
   const [currentView, setCurrentView] = useState<string>('home');
   const [posts, setPosts] = useState<Post[]>(mockPosts);
   const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
