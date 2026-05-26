@@ -120,18 +120,18 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
       {/* Decorative gradient border outline glow */}
       <div className="absolute inset-0 p-[1.5px] rounded-[28px] bg-gradient-to-tr from-purple/10 via-white/5 to-pink/10 pointer-events-none -z-10" />
 
-      {/* Grid container: Split side-by-side on desktop, stacked on mobile */}
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      {/* Grid container: Split side-by-side on both mobile & desktop, single-column below 360px */}
+      <div className="grid grid-cols-[0.9fr_1.1fr] max-[360px]:grid-cols-1 gap-2 sm:gap-4">
         
         {/* ============================================================== */}
         {/* LEFT / POST SECTION: User, Media, Small Caption */}
         {/* ============================================================== */}
-        <div className="p-4 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/5">
+        <div className="p-2 sm:p-4 flex flex-col justify-between border-r max-[360px]:border-r-0 max-[360px]:border-b border-white/5 min-w-0">
           
-          <div className="space-y-3">
+          <div className="space-y-2">
             {/* Header User info */}
-            <div className="flex items-center gap-3">
-              <div className="relative h-8 w-8 flex-shrink-0 cursor-pointer">
+            <div className="flex items-center gap-1.5 sm:gap-3">
+              <div className="relative h-6 w-6 sm:h-8 sm:w-8 flex-shrink-0 cursor-pointer">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={post.user.avatar}
@@ -139,33 +139,25 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                   className="h-full w-full rounded-lg object-cover border border-white/10"
                 />
                 {post.user.status === 'online' && (
-                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-card bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+                  <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full border border-card bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" />
                 )}
               </div>
               <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] font-black text-white hover:underline cursor-pointer truncate block max-w-[80px]">
-                    {post.user.displayName}
+                <div className="flex items-center gap-1">
+                  <span className="text-[9px] sm:text-[11px] font-black text-white hover:underline cursor-pointer truncate block max-w-[60px] sm:max-w-[100px]">
+                    @{post.user.username}
                   </span>
                   {post.user.isVerified && (
-                    <span className="text-[9px] text-purple font-black">⚡</span>
-                  )}
-                  {post.community && (
-                    <span className="text-[9px] font-extrabold text-pink truncate block max-w-[60px] hover:underline cursor-pointer">
-                      {post.community}
-                    </span>
+                    <span className="text-[8px] sm:text-[9px] text-purple font-black">⚡</span>
                   )}
                 </div>
-                <span className="text-[8px] text-gray-text block uppercase font-bold">
-                  @{post.user.username}
-                </span>
               </div>
             </div>
 
             {/* Media Content */}
             {post.type === 'image' && post.mediaUrl && (
               <div
-                className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black/30 cursor-pointer border border-white/5"
+                className="relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black/30 cursor-pointer border border-white/5 max-h-[85px] sm:max-h-[220px]"
                 onClick={handleDoubleTap}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -183,9 +175,9 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                       animate={{ scale: [1, 1.25, 0.9, 1], opacity: [0, 1, 1, 0] }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.6 }}
-                      className="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center pointer-events-none z-30"
+                      className="absolute inset-0 m-auto flex h-10 w-10 sm:h-14 sm:w-14 items-center justify-center pointer-events-none z-30"
                     >
-                      <Heart className="h-14 w-14 fill-pink text-pink filter drop-shadow-[0_0_15px_rgba(255,46,147,0.8)]" />
+                      <Heart className="h-10 w-10 sm:h-14 sm:w-14 fill-pink text-pink filter drop-shadow-[0_0_15px_rgba(255,46,147,0.8)]" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -193,7 +185,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
             )}
 
             {post.type === 'video' && post.mediaUrl && (
-              <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black/30 border border-white/5">
+              <div className="relative aspect-video w-full rounded-xl sm:rounded-2xl overflow-hidden bg-black/30 border border-white/5 max-h-[85px] sm:max-h-[220px]">
                 <video
                   src={post.mediaUrl}
                   loop
@@ -204,41 +196,41 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                 />
                 <button
                   onClick={() => setIsVideoMuted(!isVideoMuted)}
-                  className="absolute bottom-2.5 right-2.5 p-1.5 rounded-lg bg-black/60 border border-white/10 text-white hover:bg-black/80 transition-colors cursor-pointer select-none"
+                  className="absolute bottom-1 right-1 p-1 rounded-lg bg-black/60 border border-white/10 text-white hover:bg-black/80 transition-colors cursor-pointer select-none"
                 >
-                  {isVideoMuted ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
+                  {isVideoMuted ? <VolumeX className="h-2.5 w-2.5" /> : <Volume2 className="h-2.5 w-2.5" />}
                 </button>
               </div>
             )}
 
             {post.type === 'discord-code' && post.mediaUrl && (
               <div className="rounded-xl overflow-hidden border border-white/10 bg-black/75">
-                <div className="flex items-center justify-between bg-white/5 px-3 py-1.5 border-b border-white/5">
-                  <span className="text-[8px] font-black uppercase text-gray-text tracking-widest">
-                    TS / Code block
+                <div className="flex items-center justify-between bg-white/5 px-2 py-1 border-b border-white/5">
+                  <span className="text-[7px] sm:text-[8px] font-black uppercase text-gray-text tracking-widest">
+                    TS / Code
                   </span>
                   <button
                     onClick={handleCopyCode}
-                    className="flex items-center gap-1 text-[10px] text-gray-text hover:text-white transition-colors cursor-pointer select-none font-bold"
+                    className="flex items-center gap-0.5 text-[8px] sm:text-[10px] text-gray-text hover:text-white transition-colors cursor-pointer select-none font-bold"
                   >
-                    {copiedCode ? <Check className="h-3 w-3 text-green-400" /> : <Copy className="h-3 w-3" />}
+                    {copiedCode ? <Check className="h-2.5 w-2.5 text-green-400" /> : <Copy className="h-2.5 w-2.5" />}
                     <span>{copiedCode ? 'Copied' : 'Copy'}</span>
                   </button>
                 </div>
-                <pre className="p-3 overflow-x-auto text-[9.5px] font-mono text-pink/90 leading-4 custom-scrollbar max-h-40">
+                <pre className="p-2 overflow-x-auto text-[8px] sm:text-[9.5px] font-mono text-pink/90 leading-3 sm:leading-4 custom-scrollbar max-h-16 sm:max-h-40">
                   <code>{post.mediaUrl}</code>
                 </pre>
               </div>
             )}
 
             {/* Post Title & Description Caption (concise) */}
-            <div className="space-y-1 pt-1">
+            <div className="space-y-0.5 pt-0.5">
               {post.title && (
-                <h4 className="text-[12px] sm:text-[13px] font-black text-white leading-snug">
+                <h4 className="text-[10px] sm:text-[13px] font-black text-white leading-snug truncate">
                   {post.title}
                 </h4>
               )}
-              <p className="text-[11px] sm:text-[12px] text-gray-text leading-relaxed font-medium">
+              <p className="text-[9.5px] sm:text-[12px] text-gray-text leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">
                 {post.content}
               </p>
             </div>
@@ -246,7 +238,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-3">
+            <div className="hidden sm:flex flex-wrap gap-1 mt-3">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
@@ -263,28 +255,28 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
         {/* ============================================================== */}
         {/* RIGHT / TOP COMMENT SECTION: Hero comment, commenters, likes */}
         {/* ============================================================== */}
-        <div className="p-4 flex flex-col justify-between bg-gradient-to-br from-purple/[0.03] to-pink/[0.01]">
+        <div className="p-2 sm:p-4 flex flex-col justify-between bg-gradient-to-br from-purple/[0.03] to-pink/[0.01] min-w-0">
           
-          <div className="space-y-4">
+          <div className="space-y-2 sm:space-y-4">
             
             {/* Header label specifying comment is hero content */}
-            <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
-              <span className="text-[9px] font-black uppercase tracking-widest text-pink flex items-center gap-1 bg-pink/10 border border-pink/35 px-2.5 py-0.8 rounded-full shadow-[0_0_8px_rgba(255,46,147,0.12)]">
-                <Flame className="h-3 w-3 text-pink animate-pulse" />
+            <div className="flex items-center justify-between border-b border-white/5 pb-1.5 sm:pb-2.5">
+              <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-pink flex items-center gap-0.5 sm:gap-1 bg-pink/10 border border-pink/35 px-1.5 sm:px-2.5 py-0.5 sm:py-0.8 rounded-full shadow-[0_0_8px_rgba(255,46,147,0.12)]">
+                <Flame className="h-2.5 w-2.5 text-pink animate-pulse" />
                 <span>Top Comment 🔥</span>
               </span>
-              <span className="text-[8px] text-gray-text font-black uppercase tracking-widest">
+              <span className="hidden sm:inline text-[8px] text-gray-text font-black uppercase tracking-widest">
                 Hero Content
               </span>
             </div>
 
             {postComments && postComments.length > 0 ? (
               // If comments exist, show the big highlighted comment
-              <div className="space-y-4 pt-1">
+              <div className="space-y-2 sm:space-y-4 pt-0.5 sm:pt-1">
                 
                 {/* Highlighted Commenter Avatar, Username */}
-                <div className="flex items-center gap-2.5">
-                  <div className="h-7 w-7 rounded-lg overflow-hidden flex-shrink-0 border border-white/10 shadow-inner">
+                <div className="flex items-center gap-1.5 sm:gap-2.5">
+                  <div className="h-5 w-5 sm:h-7 sm:w-7 rounded-lg overflow-hidden flex-shrink-0 border border-white/10 shadow-inner">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={postComments[0].user.avatar}
@@ -293,32 +285,29 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                     />
                   </div>
                   <div>
-                    <span className="text-xs font-black text-white hover:underline cursor-pointer block leading-none">
+                    <span className="text-[10px] sm:text-xs font-black text-white hover:underline cursor-pointer block leading-none">
                       @{postComments[0].user.username}
-                    </span>
-                    <span className="text-[8px] text-gray-text font-bold block mt-0.5">
-                      Camp Supporter • {postComments[0].timestamp}
                     </span>
                   </div>
                 </div>
 
                 {/* Big, heroic, extremely outstanding comment block */}
-                <div className="relative p-1 rounded-2xl overflow-hidden bg-gradient-to-tr from-purple/10 via-transparent to-pink/5 border border-white/5">
-                  <div className="absolute top-0 right-0 h-16 w-16 bg-purple/10 rounded-full blur-md pointer-events-none" />
+                <div className="relative p-0.5 rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-tr from-purple/10 via-transparent to-pink/5 border border-white/5">
+                  <div className="absolute top-0 right-0 h-10 w-10 sm:h-16 sm:w-16 bg-purple/10 rounded-full blur-md pointer-events-none" />
                   
-                  <p className="text-base sm:text-lg font-black text-white leading-relaxed tracking-wide italic p-3 text-gradient">
+                  <p className="text-[10.5px] sm:text-base font-black text-white leading-relaxed tracking-wide italic p-2 sm:p-3 text-gradient line-clamp-3 sm:line-clamp-none">
                     "{postComments[0].content}"
                   </p>
                 </div>
 
                 {/* Comment statistics metric */}
-                <div className="flex gap-4 text-[9px] font-black uppercase text-gray-text pt-1">
-                  <span className="flex items-center gap-1">
-                    <Heart className="h-3.5 w-3.5 fill-pink/25 text-pink" />
+                <div className="flex gap-2 sm:gap-4 text-[8px] sm:text-[9px] font-black uppercase text-gray-text pt-0.5">
+                  <span className="flex items-center gap-0.5 sm:gap-1">
+                    <Heart className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-pink/25 text-pink" />
                     <span>{postComments[0].likes || reactionCounts.fire} Reactions</span>
                   </span>
-                  <span className="flex items-center gap-1">
-                    <MessageSquare className="h-3.5 w-3.5 fill-purple/25 text-purple" />
+                  <span className="flex items-center gap-0.5 sm:gap-1">
+                    <MessageSquare className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 fill-purple/25 text-purple" />
                     <span>{postComments[0].replies?.length || 14} Replies</span>
                   </span>
                 </div>
@@ -326,10 +315,10 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
               </div>
             ) : (
               // Placeholder for when no comments exist yet
-              <div className="py-8 text-center space-y-2 border border-dashed border-white/10 rounded-2xl bg-white/[0.01]">
-                <span className="text-2xl block animate-bounce">⚔️</span>
-                <span className="text-[10px] font-black text-orange uppercase tracking-wider block">LOBBY VACANT</span>
-                <p className="text-[10px] text-gray-text px-6 leading-relaxed font-medium">
+              <div className="py-4 sm:py-8 text-center space-y-1 sm:space-y-2 border border-dashed border-white/10 rounded-xl sm:rounded-2xl bg-white/[0.01]">
+                <span className="text-lg sm:text-2xl block animate-bounce">⚔️</span>
+                <span className="text-[8px] sm:text-[10px] font-black text-orange uppercase tracking-wider block">LOBBY VACANT</span>
+                <p className="text-[8px] sm:text-[10px] text-gray-text px-2 sm:px-6 leading-relaxed font-medium">
                   Awaiting a savage roast comment. Be the first to strike and capture the hero content spot!
                 </p>
               </div>
@@ -338,7 +327,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
           </div>
 
           {/* Direct quick comment publisher */}
-          <form onSubmit={handleAddComment} className="flex gap-2 pt-4 border-t border-white/5 mt-4">
+          <form onSubmit={handleAddComment} className="hidden sm:flex gap-2 pt-4 border-t border-white/5 mt-4">
             <input
               type="text"
               placeholder="Strike back with a roast..."
