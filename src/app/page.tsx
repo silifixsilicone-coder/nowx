@@ -26,6 +26,7 @@ import DiscordChat from '@/components/DiscordChat';
 import CreatePostModal from '@/components/CreatePostModal';
 import CreatePostPage from '@/components/CreatePostPage';
 import BattleArenaPage from '@/components/BattleArenaPage';
+import BattleFeedPage from '@/components/BattleFeedPage';
 import ProfilePage from '@/components/ProfilePage';
 import LoginPage from '@/components/LoginPage';
 
@@ -404,9 +405,24 @@ export default function Home() {
                 </div>
               )}
 
-              {/* --- VIEW: BATTLES (Dual Creator Duel Deck) --- */}
+              {/* --- VIEW: BATTLES (List of Creator Duels Feed) --- */}
               {currentView === 'battles' && (
-                <BattleArenaPage onBack={() => setCurrentView('home')} />
+                <BattleFeedPage
+                  onJoinBattle={(battleId) => {
+                    // Redirect to specific battle arena view
+                    if (battleId === 'virat_rohit') {
+                      setCurrentView('battle_arena');
+                    } else {
+                      alert(`Entering ${battleId} arena... (Arena is currently being populated by AI active streams!)`);
+                    }
+                  }}
+                  onViewChange={setCurrentView}
+                />
+              )}
+
+              {/* --- VIEW: BATTLE ARENA (Individual Creator Duel Deck) --- */}
+              {currentView === 'battle_arena' && (
+                <BattleArenaPage onBack={() => setCurrentView('battles')} />
               )}
 
               {/* --- VIEW: CHAT (Discord channel system) --- */}
