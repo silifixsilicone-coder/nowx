@@ -2,10 +2,7 @@
 
 import React, { useState } from 'react';
 import {
-  MessageSquare,
   Share2,
-  Volume2,
-  VolumeX,
   Heart,
   Bookmark,
   MoreHorizontal,
@@ -13,8 +10,6 @@ import {
   Send,
   Smile,
   Image as ImageIcon,
-  Flame,
-  Award,
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -100,43 +95,16 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
     setPostComments(prev => prev.filter(c => c.id !== commentId));
   };
 
-  // Dynamic style calculator for Top Comment Preview based on likes count
+  // Redesigned Top Comment style conforming strictly to Orange specifications
   const getTopCommentStyle = (likes: number) => {
-    if (likes >= 500) {
-      return {
-        className: "border border-yellow-500/50 bg-yellow-500/5 shadow-[0_0_20px_rgba(234,179,8,0.18)] p-2.5 rounded-2xl relative overflow-hidden",
-        badge: "Fan Favorite 👑",
-        textStyle: "text-yellow-400 font-bold"
-      };
-    } else if (likes >= 100) {
-      return {
-        className: "border border-orange/45 bg-orange/5 shadow-[0_0_15px_rgba(255,138,0,0.15)] p-2.5 rounded-2xl relative overflow-hidden",
-        badge: "Orange Fire 🔥",
-        textStyle: "text-orange font-bold"
-      };
-    } else if (likes >= 50) {
-      return {
-        className: "border border-pink/35 bg-pink/5 shadow-[0_0_12px_rgba(255,46,147,0.12)] p-2.5 rounded-2xl relative overflow-hidden",
-        badge: "Pink Border ✨",
-        textStyle: "text-pink font-bold"
-      };
-    } else if (likes >= 20) {
-      return {
-        className: "border border-purple/25 bg-purple/5 shadow-[0_0_10px_rgba(124,58,237,0.1)] p-2.5 rounded-2xl relative overflow-hidden",
-        badge: "Purple Glow ⚡",
-        textStyle: "text-purple font-bold"
-      };
-    } else {
-      return {
-        className: "border border-white/5 bg-white/[0.01] p-2.5 rounded-2xl relative",
-        badge: null,
-        textStyle: "text-gray-text font-bold"
-      };
-    }
+    return {
+      className: "border border-[#FF6A00] bg-soft-orange shadow-[0_0_15px_rgba(255,106,0,0.15)] p-3 rounded-2xl relative overflow-hidden",
+      badge: likes >= 100 ? "Fan Favorite 👑" : null,
+      textStyle: "text-[#FF6A00] font-black"
+    };
   };
 
   const topComment = postComments[0];
-  // Calculate mock comment likes based on post metrics if not explicitly detailed
   const commentLikes = topComment ? (topComment.likes || Math.floor(likesCount * 0.45) + 1) : 0;
   const topCommentStyles = getTopCommentStyle(commentLikes);
 
@@ -167,7 +135,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
               <span className="text-xs font-black text-white hover:underline cursor-pointer block leading-none">
                 {post.user.displayName}
               </span>
-              <span className="text-[10px] text-cyan-400 font-bold">✓</span>
+              <span className="text-[10px] text-[#FF6A00] font-bold">✓</span>
             </div>
             <span className="text-[9.5px] text-gray-text font-bold block mt-0.5 leading-none">
               2h ago
@@ -219,8 +187,8 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
             )}
             
             {post.type === 'discord-code' && (
-              <div className="w-full h-full bg-[#12131C] p-1.5 flex items-center justify-center">
-                <span className="text-[6.5px] font-mono text-pink tracking-tight truncate w-full">Code</span>
+              <div className="w-full h-full bg-[#1A1A1A] p-1.5 flex items-center justify-center">
+                <span className="text-[6.5px] font-mono text-[#FF6A00] tracking-tight truncate w-full">Code</span>
               </div>
             )}
 
@@ -234,7 +202,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                   transition={{ duration: 0.6 }}
                   className="absolute inset-0 m-auto flex h-7 w-7 items-center justify-center pointer-events-none z-30"
                 >
-                  <Heart className="h-7 w-7 fill-pink text-pink filter drop-shadow-[0_0_8px_rgba(255,46,147,0.8)]" />
+                  <Heart className="h-7 w-7 fill-[#FF6A00] text-[#FF6A00] filter drop-shadow-[0_0_8px_rgba(255,106,0,0.8)]" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -242,7 +210,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
         )}
       </div>
 
-      {/* 3. TOP COMMENT SECTION (Comment-First Hero Highlight) */}
+      {/* 3. TOP COMMENT SECTION (Comment-First Hero Highlight with orange border and soft orange background) */}
       <div className="space-y-2 pt-0.5">
         <div className="flex items-center">
           <span className="text-[8px] font-black uppercase tracking-wider text-gray-text px-2 py-0.5 bg-white/5 border border-white/10 rounded-md">
@@ -251,7 +219,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
         </div>
 
         {topComment ? (
-          <div className="bg-[#12131C] border border-white/5 rounded-2xl p-3 flex gap-2.5 items-start relative group">
+          <div className={topCommentStyles.className}>
             {/* Commenter Avatar */}
             <div className="h-6.5 w-6.5 rounded-full overflow-hidden flex-shrink-0 border border-white/10 mt-0.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -264,10 +232,15 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                 <span className="text-[10px] font-black text-white hover:underline cursor-pointer block leading-none">
                   {topComment.user.username}
                 </span>
-                <span className="text-[9px] text-yellow-500">👑</span>
+                <span className="text-[9px] text-[#FF6A00]">👑</span>
                 <span className="text-[8.5px] text-gray-text font-bold block ml-1 leading-none">
                   • 2h
                 </span>
+                {topCommentStyles.badge && (
+                  <span className={`text-[7px] font-black uppercase px-1.5 py-0.5 rounded bg-[#FF6A00]/10 ${topCommentStyles.textStyle}`}>
+                    {topCommentStyles.badge}
+                  </span>
+                )}
               </div>
               <p className="text-[10px] text-white/90 leading-relaxed break-words font-medium pl-0.5">
                 {topComment.content}
@@ -275,9 +248,9 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
             </div>
 
             {/* Heart metric aligned to the far right inside comment bubble */}
-            <div className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-0.8 text-gray-text hover:text-pink transition-colors cursor-pointer select-none">
-              <Heart className="h-3 w-3 fill-pink text-pink mr-1" />
-              <span className="text-[9.5px] font-black text-pink">12.6K</span>
+            <div className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-0.8 text-gray-text hover:text-[#FF6A00] transition-colors cursor-pointer select-none">
+              <Heart className="h-3 w-3 fill-[#FF6A00] text-[#FF6A00] mr-1" />
+              <span className="text-[9.5px] font-black text-[#FF6A00]">12.6K</span>
             </div>
           </div>
         ) : (
@@ -295,10 +268,10 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
           onClick={handleToggleLike}
-          className="flex items-center gap-1 text-[10px] font-black text-gray-text hover:text-orange transition-colors cursor-pointer select-none"
+          className="flex items-center gap-1 text-[10px] font-black text-gray-text hover:text-[#FF6A00] transition-colors cursor-pointer select-none"
         >
           <span className="text-[12px]">🔥</span>
-          <span className={isLiked ? 'text-orange font-black' : ''}>12.6K</span>
+          <span className={isLiked ? 'text-[#FF6A00] font-black' : ''}>{likesCount.toLocaleString()}</span>
         </motion.button>
 
         {/* Laugh Reaction */}
@@ -316,7 +289,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
           onClick={() => setShowComments(!showComments)}
-          className="flex items-center gap-1 text-[10px] font-black text-gray-text hover:text-purple transition-colors cursor-pointer select-none"
+          className="flex items-center gap-1 text-[10px] font-black text-gray-text hover:text-[#FF6A00] transition-colors cursor-pointer select-none"
         >
           <span className="text-[12px]">💬</span>
           <span>{postComments.length}</span>
@@ -341,19 +314,18 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
           onClick={() => setIsSaved(!isSaved)}
-          className="text-gray-text hover:text-pink cursor-pointer select-none"
+          className="text-gray-text hover:text-[#FF6A00] cursor-pointer select-none"
         >
-          <Bookmark className={`h-3.5 w-3.5 ${isSaved ? 'fill-pink text-pink' : ''}`} />
+          <Bookmark className={`h-3.5 w-3.5 ${isSaved ? 'fill-[#FF6A00] text-[#FF6A00]' : ''}`} />
         </motion.button>
 
       </div>
 
 
       {/* ============================================================== */}
-      {/* STATEFUL INSTAGRAM-STYLE COMMENTS DRAWER (Mobile Bottom Sheet / Desktop inline) */}
+      {/* STATEFUL INSTAGRAM-STYLE COMMENTS DRAWER */}
       {/* ============================================================== */}
       
-      {/* Backdrop blur overlay on mobile only when comments drawer is active */}
       <AnimatePresence>
         {showComments && (
           <motion.div
@@ -373,10 +345,9 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
             animate={{ height: 'auto', y: 0 }}
             exit={{ height: 0, y: 15 }}
             transition={{ duration: 0.25 }}
-            className="border-t border-white/10 bg-[#0B0B12] overflow-hidden rounded-t-[28px] max-[640px]:fixed max-[640px]:bottom-0 max-[640px]:inset-x-0 max-[640px]:z-[150] max-[640px]:max-h-[75vh] max-[640px]:flex max-[640px]:flex-col max-[640px]:shadow-[0_-8px_32px_rgba(0,0,0,0.7)]"
+            className="border-t border-white/10 bg-[#0A0A0A] overflow-hidden rounded-t-[28px] max-[640px]:fixed max-[640px]:bottom-0 max-[640px]:inset-x-0 max-[640px]:z-[150] max-[640px]:max-h-[75vh] max-[640px]:flex max-[640px]:flex-col max-[640px]:shadow-[0_-8px_32px_rgba(0,0,0,0.7)]"
           >
             
-            {/* Instagram style header with top drag handle & close buttons */}
             <div className="pt-3 pb-2 border-b border-white/5 bg-white/[0.01] flex-shrink-0">
               <div className="w-11 h-1 bg-white/20 rounded-full mx-auto mb-2 sm:hidden" />
               <div className="flex justify-between items-center px-4">
@@ -409,11 +380,10 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
             </div>
 
             {/* Fixed bottom rounded-pill comment composer form */}
-            <form onSubmit={handleAddComment} className="p-3 bg-[#12131C] border-t border-white/5 flex gap-2 items-center sticky bottom-0 z-10">
+            <form onSubmit={handleAddComment} className="p-3 bg-card-elevated border-t border-white/5 flex gap-2 items-center sticky bottom-0 z-10">
               
-              <div className="flex-1 flex gap-1.5 items-center bg-white/5 border border-white/10 rounded-full px-3.5 py-2 focus-within:border-purple/50 focus-within:ring-1 focus-within:ring-purple/20 transition-all">
+              <div className="flex-1 flex gap-1.5 items-center bg-white/5 border border-white/10 rounded-full px-3.5 py-2 focus-within:border-[#FF6A00]/50 focus-within:ring-1 focus-within:ring-[#FF6A00]/20 transition-all">
                 
-                {/* Emoji panel toggle */}
                 <button
                   type="button"
                   onClick={() => alert("Emoji selectors activated!")}
@@ -430,7 +400,6 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                   className="flex-1 bg-transparent text-xs text-white placeholder-gray-text focus:outline-none font-medium"
                 />
 
-                {/* GIPHY visual toggle */}
                 <button
                   type="button"
                   onClick={() => alert("GIPHY attachments active!")}
@@ -441,10 +410,10 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
 
               </div>
 
-              {/* Glowing pill send button */}
+              {/* Glowing pill orange send button */}
               <button
                 type="submit"
-                className="h-9 w-9 rounded-full bg-purple hover:bg-opacity-90 active:scale-95 text-white flex items-center justify-center transition-all cursor-pointer shadow-md select-none flex-shrink-0"
+                className="h-9 w-9 rounded-full bg-[#FF6A00] hover:bg-opacity-90 active:scale-95 text-white flex items-center justify-center transition-all cursor-pointer shadow-md select-none flex-shrink-0"
               >
                 <Send className="h-3.5 w-3.5 text-white" />
               </button>

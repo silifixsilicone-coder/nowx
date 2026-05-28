@@ -57,11 +57,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B12] text-white flex items-center justify-center p-4 md:p-8 select-none overflow-hidden relative font-sans">
+    <div className="min-h-screen bg-[#0A0A0A] light:bg-[#FFFFFF] text-white flex items-center justify-center p-4 md:p-8 select-none overflow-hidden relative font-sans">
       
       {/* Background ambient glowing blobs */}
-      <div className="absolute top-[-10%] left-[-10%] h-[50vw] w-[50vw] bg-[#7C3AED]/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] h-[50vw] w-[50vw] bg-[#FF2E93]/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] h-[50vw] w-[50vw] bg-[#FF6A00]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] h-[50vw] w-[50vw] bg-[#FF6A00]/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Grid split container for Split screen Desktop / Centered card Mobile layout */}
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
@@ -71,10 +71,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
           
           {/* Smartphone device container frame */}
           <div 
-            className="w-[300px] h-[610px] rounded-[52px] bg-[#12131C] p-3.5 border-4 border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_rgba(124,58,237,0.15)] relative overflow-hidden transition-all duration-500 hover:border-purple/30 group"
+            className="w-[300px] h-[610px] rounded-[52px] bg-[#111111] p-3.5 border-4 border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] relative overflow-hidden transition-all duration-500 hover:border-[#FF6A00]/30 group"
           >
             {/* Ambient inner phone glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-purple/5 via-transparent to-pink/5 opacity-60 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#FF6A00]/5 via-transparent to-[#FF6A00]/5 opacity-60 pointer-events-none" />
 
             {/* Smartphone top camera notch */}
             <div className="absolute top-3 left-1/2 -translate-x-1/2 h-5 w-32 bg-black rounded-full z-40 flex items-center justify-center">
@@ -94,17 +94,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             </div>
 
             {/* Simulated Live App Screen Body */}
-            <div className="flex flex-col h-[526px] overflow-hidden justify-between relative bg-[#0B0B12] text-white">
+            <div className="flex flex-col h-[526px] overflow-hidden justify-between relative bg-[#0A0A0A] text-white">
               
               {/* Mock App Header */}
-              <div className="flex items-center justify-between px-3 py-2 border-b border-white/5 bg-[#12131C]/90 backdrop-blur-md">
-                <span className="text-xs font-black bg-gradient-to-r from-purple via-pink to-orange bg-clip-text text-transparent tracking-wider flex items-center gap-0.5">
-                  <Sparkles className="h-3 w-3 text-purple" />
+              <div className="flex items-center justify-between px-3 py-2 border-b border-white/5 bg-[#111111]/90 backdrop-blur-md">
+                <span className="text-xs font-black text-[#FF6A00] tracking-wider flex items-center gap-0.5">
+                  <Sparkles className="h-3 w-3 text-[#FF6A00]" />
                   ReactVerse
                 </span>
                 <div className="flex gap-2">
-                  <span className="h-2 w-2 rounded-full bg-pink animate-ping" />
-                  <span className="text-[8px] font-black text-pink uppercase">LIVE FEED</span>
+                  <span className="h-2 w-2 rounded-full bg-[#FF6A00] animate-ping" />
+                  <span className="text-[8px] font-black text-[#FF6A00] uppercase">LIVE FEED</span>
                 </div>
               </div>
 
@@ -114,20 +114,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 {/* 1. Stories tray mockup */}
                 <div className="flex gap-2.5 overflow-x-auto no-scrollbar items-center pb-1">
                   {[
-                    { id: 0, label: 'AI Roast', color: 'from-purple to-pink', avatar: '🤖' },
-                    { id: 1, label: 'Fan Battle', color: 'from-pink to-orange', avatar: '⚔️' },
-                    { id: 2, label: 'Rust Crab', color: 'from-orange to-purple', avatar: '🦀' },
-                    { id: 3, label: 'Aria Rose', color: 'from-purple to-pink', avatar: '💅' },
+                    { id: 0, label: 'AI Roast', color: 'from-[#FF6A00] to-[#FF8F3D]', avatar: '🤖' },
+                    { id: 1, label: 'Fan Battle', color: 'from-[#FF6A00] to-[#FF8F3D]', avatar: '⚔️' },
+                    { id: 2, label: 'Cricket', color: 'from-[#FF6A00] to-[#FF8F3D]', avatar: '🏏' },
+                    { id: 3, label: 'Aria Rose', color: 'from-[#FF6A00] to-[#FF8F3D]', avatar: '💅' },
                   ].map((st) => {
                     const isActive = mockStoryIndex === st.id;
                     return (
                       <div key={st.id} className="flex flex-col items-center gap-1 flex-shrink-0">
                         <div 
                           className={`h-11 w-11 rounded-full p-[1.5px] bg-gradient-to-tr ${st.color} transition-all duration-500 ${
-                            isActive ? 'scale-110 shadow-[0_0_10px_rgba(255,46,147,0.5)]' : 'opacity-65'
+                            isActive ? 'scale-110 shadow-[0_0_10px_rgba(255,106,0,0.5)]' : 'opacity-65'
                           }`}
                         >
-                          <div className="h-full w-full rounded-full bg-[#0B0B12] flex items-center justify-center text-sm font-black">
+                          <div className="h-full w-full rounded-full bg-[#0A0A0A] flex items-center justify-center text-sm font-black">
                             {st.avatar}
                           </div>
                         </div>
@@ -138,52 +138,52 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 </div>
 
                 {/* 2. Breaking Spotlights banner */}
-                <div className="p-2.5 rounded-xl bg-gradient-to-r from-orange/15 to-pink/15 border border-white/5 relative overflow-hidden flex items-center justify-between">
+                <div className="p-2.5 rounded-xl bg-[#FF6A00]/10 border border-[#FF6A00]/25 relative overflow-hidden flex items-center justify-between">
                   <div className="min-w-0">
-                    <span className="text-[6px] font-black text-orange uppercase tracking-wider block">SPOTLIGHT 🔥</span>
+                    <span className="text-[6px] font-black text-[#FF6A00] uppercase tracking-wider block">SPOTLIGHT 🔥</span>
                     <span className="text-[8px] font-bold text-white block truncate">Virat Fans vs Rohit Fans Duel</span>
                   </div>
-                  <span className="text-[8px] font-black text-pink bg-pink/10 border border-pink/30 px-1.5 py-0.5 rounded">94% Hype</span>
+                  <span className="text-[8px] font-black text-[#FF6A00] bg-[#FF6A00]/10 border border-[#FF6A00]/30 px-1.5 py-0.5 rounded">94% Hype</span>
                 </div>
 
                 {/* 3. Feed Card Emulator */}
-                <div className="p-3 rounded-xl bg-[#12131C] border border-white/5 space-y-2.5">
+                <div className="p-3 rounded-xl bg-[#111111] border border-white/5 space-y-2.5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <div className="h-5 w-5 rounded bg-purple/20 border border-purple/30 flex items-center justify-center text-[10px]">
+                      <div className="h-5 w-5 rounded bg-[#FF6A00]/20 border border-[#FF6A00]/30 flex items-center justify-center text-[10px]">
                         🎨
                       </div>
                       <div>
-                        <span className="text-[9px] font-black text-white block">tailwind_queen</span>
-                        <span className="text-[6px] text-gray-text block">r/tailwind</span>
+                        <span className="text-[9px] font-black text-white block">FanWar_Captain</span>
+                        <span className="text-[6px] text-gray-text block">c/fan_wars</span>
                       </div>
                     </div>
                     <span className="text-[8px] font-bold text-gray-text">2m ago</span>
                   </div>
 
                   <p className="text-[9px] text-white/90 leading-relaxed">
-                    Tailwind CSS v4.0 compilation speeds are up to 10x faster now under Rust! 🦀⚡
+                    Australia airplane mode me hai. Cummins when he tries to silence the Indian crowd! 🤫❌
                   </p>
 
-                  <div className="aspect-video rounded-lg overflow-hidden border border-white/5 relative bg-[#0B0B12]">
+                  <div className="aspect-video rounded-lg overflow-hidden border border-white/5 relative bg-[#0A0A0A]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
-                      src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=280&h=160&fit=crop" 
+                      src="https://images.unsplash.com/photo-1540747737956-37872404f8c1?w=280&h=160&fit=crop" 
                       alt="visual mockup" 
                       className="w-full h-full object-cover" 
                     />
                   </div>
 
-                  {/* Top Highlighted Comment (Highly Visually Outstanding) */}
-                  <div className="p-2 rounded-lg bg-purple/10 border border-purple/25 relative overflow-hidden">
+                  {/* Top Highlighted Comment (Orange Border & soft bg) */}
+                  <div className="p-2 rounded-lg bg-[#FF6A00]/10 border border-[#FF6A00]/30 relative overflow-hidden">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-[7px] font-black text-pink uppercase tracking-widest">🔥 HIGHLIGHTED ROAST</span>
-                      <span className="text-[6px] text-gray-text">❤️ 1.2k</span>
+                      <span className="text-[7px] font-black text-[#FF6A00] uppercase tracking-widest">🔥 HIGHLIGHTED ROAST</span>
+                      <span className="text-[6px] text-gray-text">❤️ 12.6k</span>
                     </div>
                     <p className="text-[8.5px] font-extrabold italic text-white leading-normal">
-                      "Australia airplane mode me hai 😂"
+                      "Australian team ko ab VPN ki zarurat hai 😂🌍"
                     </p>
-                    <span className="text-[6px] text-gray-text block mt-0.5">@neon_rider</span>
+                    <span className="text-[6px] text-gray-text block mt-0.5">@Sarcastic_King</span>
                   </div>
 
                   {/* Actions & Reactions */}
@@ -195,7 +195,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     </div>
                     <div className="flex gap-2 text-[7px] font-black text-gray-text uppercase">
                       <span>💬 1.8k</span>
-                      <span>🔄 share</span>
+                      <span>↗ share</span>
                     </div>
                   </div>
 
@@ -204,14 +204,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
               </div>
 
               {/* Mock Bottom Navigation */}
-              <div className="border-t border-white/5 bg-[#12131C]/90 backdrop-blur-md py-1 px-4 flex items-center justify-between relative">
-                {/* 4 dots/icons for items */}
-                <div className="text-[10px] text-purple select-none cursor-not-allowed">🏠</div>
+              <div className="border-t border-white/5 bg-[#111111]/90 backdrop-blur-md py-1.5 px-4 flex items-center justify-between relative">
+                <div className="text-[10px] text-[#FF6A00] select-none cursor-not-allowed">🏠</div>
                 <div className="text-[10px] text-gray-text select-none cursor-not-allowed">🧭</div>
                 
                 {/* Center floating Create button */}
-                <div className="relative -top-4 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-purple to-pink text-white shadow-[0_0_10px_rgba(124,58,237,0.6)] border-2 border-[#0B0B12]">
-                  <span className="text-sm font-black">+</span>
+                <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#FF6A00] text-white">
+                  <span className="text-xs font-black">+</span>
                 </div>
 
                 <div className="text-[10px] text-gray-text select-none cursor-not-allowed">⚔️</div>
@@ -222,8 +221,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
           </div>
 
           {/* Glowing backdrops representing device reflections */}
-          <div className="absolute top-1/2 -left-4 -translate-y-1/2 w-8 h-40 bg-gradient-to-b from-purple to-pink blur-md rounded-full opacity-30 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
-          <div className="absolute top-1/2 -right-4 -translate-y-1/2 w-8 h-40 bg-gradient-to-b from-pink to-orange blur-md rounded-full opacity-30 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
+          <div className="absolute top-1/2 -left-4 -translate-y-1/2 w-8 h-40 bg-[#FF6A00]/10 blur-md rounded-full opacity-35 group-hover:opacity-45 transition-opacity duration-300 pointer-events-none" />
+          <div className="absolute top-1/2 -right-4 -translate-y-1/2 w-8 h-40 bg-[#FF6A00]/10 blur-md rounded-full opacity-35 group-hover:opacity-45 transition-opacity duration-300 pointer-events-none" />
 
         </div>
 
@@ -231,18 +230,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
         <div className="col-span-1 lg:col-span-6 flex justify-center items-center">
           
           <div 
-            className="w-full max-w-[400px] rounded-[32px] bg-[#12131C]/80 backdrop-blur-xl border border-white/10 p-7 sm:p-9 shadow-[0_0_50px_rgba(0,0,0,0.6),0_0_30px_rgba(124,58,237,0.1)] transition-all duration-300 hover:border-white/15"
+            className="w-full max-w-[400px] rounded-[32px] bg-[#111111] border border-white/10 p-7 sm:p-9 shadow-[0_0_50px_rgba(0,0,0,0.6),0_0_30px_rgba(255,106,0,0.05)] transition-all duration-300 hover:border-white/15"
           >
             
             {/* Top Logo and Tagline Container */}
             <div className="text-center space-y-2 mb-8">
-              <div className="inline-flex h-12 w-12 rounded-2xl bg-gradient-to-r from-purple via-pink to-orange p-[1.5px] shadow-[0_0_15px_rgba(255,46,147,0.4)]">
-                <div className="h-full w-full rounded-[14px] bg-[#0B0B12] flex items-center justify-center">
-                  <Sparkles className="h-5.5 w-5.5 text-pink" />
+              <div className="inline-flex h-12 w-12 rounded-2xl bg-[#FF6A00] p-[1.5px] shadow-[0_0_15px_rgba(255,106,0,0.3)]">
+                <div className="h-full w-full rounded-[14px] bg-[#0A0A0A] flex items-center justify-center">
+                  <Sparkles className="h-5.5 w-5.5 text-[#FF6A00]" />
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tighter bg-gradient-to-r from-purple via-pink to-orange bg-clip-text text-transparent select-none pt-1">
+              <h1 className="text-2xl sm:text-3xl font-black tracking-tighter text-[#FF6A00] select-none pt-1">
                 ReactVerse
               </h1>
               <p className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-gray-text">
@@ -269,7 +268,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                   placeholder="e.g. RoastMaster_99"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full bg-[#1A1D29] border border-white/5 rounded-2xl px-4 py-3 text-xs text-white placeholder-gray-text/60 focus:outline-none focus:border-purple/50 focus:ring-1 focus:ring-purple/20 transition-all duration-200"
+                  className="w-full bg-[#1A1A1A] border border-white/5 rounded-2xl px-4 py-3 text-xs text-white placeholder-gray-text/60 focus:outline-none focus:border-[#FF6A00]/50 focus:ring-1 focus:ring-[#FF6A00]/20 transition-all duration-200"
                 />
               </div>
 
@@ -277,7 +276,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
               <div className="space-y-1 relative">
                 <div className="flex justify-between items-center pl-1">
                   <label className="text-[10px] font-black uppercase text-gray-text tracking-wider">Password</label>
-                  <a href="#" onClick={(e) => { e.preventDefault(); alert('Redirecting to reset password...'); }} className="text-[9px] font-black uppercase text-purple hover:text-white transition-colors">
+                  <a href="#" onClick={(e) => { e.preventDefault(); alert('Redirecting to reset password...'); }} className="text-[9px] font-black uppercase text-[#FF6A00] hover:text-white transition-colors">
                     Forgot?
                   </a>
                 </div>
@@ -287,7 +286,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-[#1A1D29] border border-white/5 rounded-2xl pl-4 pr-11 py-3 text-xs text-white placeholder-gray-text/60 focus:outline-none focus:border-purple/50 focus:ring-1 focus:ring-purple/20 transition-all duration-200"
+                    className="w-full bg-[#1A1A1A] border border-white/5 rounded-2xl pl-4 pr-11 py-3 text-xs text-white placeholder-gray-text/60 focus:outline-none focus:border-[#FF6A00]/50 focus:ring-1 focus:ring-[#FF6A00]/20 transition-all duration-200"
                   />
                   <button
                     type="button"
@@ -304,10 +303,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-2xl text-xs font-black uppercase tracking-widest text-white bg-gradient-to-r from-purple via-pink to-orange hover:shadow-[0_0_20px_rgba(255,46,147,0.5)] cursor-pointer active:scale-[0.98] transition-all duration-300 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed select-none"
-                  style={{
-                    boxShadow: "0 0 15px rgba(124, 58, 237, 0.3), inset 0 0 8px rgba(255, 255, 255, 0.2)"
-                  }}
+                  className="w-full py-3.5 rounded-2xl text-xs font-black uppercase tracking-widest text-white bg-[#FF6A00] hover:bg-[#FF8024] hover:shadow-[0_0_20px_rgba(255,106,0,0.4)] cursor-pointer active:scale-[0.98] transition-all duration-300 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed select-none"
                 >
                   {isSubmitting ? 'Verifying Profile...' : 'Open Feed 🚀'}
                 </button>
@@ -318,7 +314,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             {/* Third party dividers */}
             <div className="relative my-6 text-center select-none">
               <span className="absolute inset-x-0 top-1/2 h-[1px] bg-white/5 -translate-y-1/2" />
-              <span className="relative bg-[#12131C] px-3.5 text-[8px] font-black uppercase text-gray-text tracking-widest">
+              <span className="relative bg-[#111111] px-3.5 text-[8px] font-black uppercase text-gray-text tracking-widest">
                 or continue with
               </span>
             </div>
@@ -327,7 +323,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             <button
               onClick={handleGoogleLogin}
               disabled={isSubmitting}
-              className="w-full py-3 rounded-2xl text-xs font-extrabold bg-[#1A1D29] border border-white/10 hover:bg-[#222636] hover:border-white/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
+              className="w-full py-3 rounded-2xl text-xs font-extrabold bg-[#1A1A1A] border border-white/10 hover:bg-[#222636] hover:border-white/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
             >
               {/* Google Flat Vector SVG icon */}
               <svg className="h-4 w-4" viewBox="0 0 24 24">
@@ -345,7 +341,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
               <a 
                 href="#" 
                 onClick={(e) => { e.preventDefault(); alert('Redirecting to create account form...'); }} 
-                className="font-black text-pink hover:underline transition-all"
+                className="font-black text-[#FF6A00] hover:underline transition-all"
               >
                 Sign Up Now
               </a>

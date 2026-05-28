@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0B0B12;
+  /* Dark Mode Default values */
+  --background: #0A0A0A;
   --foreground: #FFFFFF;
-  --card: #12131C;
-  --card-elevated: #181924;
-  --purple: #7C3AED;
-  --pink: #FF2E93;
-  --orange: #FF8A00;
+  --card: #111111;
+  --card-elevated: #1A1A1A;
+  --purple: #FF6A00; /* Map legacy styles dynamically to orange */
+  --pink: #FF6A00;
+  --orange: #FF6A00;
+  --soft-orange: #2A1508; /* Dark orange glow background */
   --text: #FFFFFF;
   --gray-text: #A1A1AA;
+  --border-theme: #2A2A2A;
 }
 
 @theme inline {
@@ -20,18 +23,19 @@
   --color-purple: var(--purple);
   --color-pink: var(--pink);
   --color-orange: var(--orange);
+  --color-soft-orange: var(--soft-orange);
   --color-text: var(--text);
   --color-gray-text: var(--gray-text);
+  --color-border-theme: var(--border-theme);
   
-  /* Additional customized theme attributes if needed */
   --animate-glow-pulse: glow-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   
   @keyframes glow-pulse {
     0%, 100% {
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 15px rgba(255, 106, 0, 0.4);
     }
     50% {
-      box-shadow: 0 0 30px rgba(255, 46, 147, 0.7);
+      box-shadow: 0 0 25px rgba(255, 106, 0, 0.6);
     }
   }
 }
@@ -45,35 +49,35 @@ body {
   padding: 0;
 }
 
-/* Glassmorphism utility classes */
+/* Glassmorphism custom classes */
 .glass-effect {
-  background: rgba(18, 19, 28, 0.75);
+  background: rgba(17, 17, 17, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-theme);
 }
 
 .glass-effect-card {
-  background: linear-gradient(135deg, rgba(18, 19, 28, 0.8) 0%, rgba(10, 10, 15, 0.9) 100%);
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.85) 0%, rgba(10, 10, 10, 0.95) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid var(--border-theme);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
 .glass-input {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-theme);
   color: #FFFFFF;
 }
 
 .glass-input:focus {
   outline: none;
-  border-color: var(--purple);
-  box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+  border-color: var(--orange);
+  box-shadow: 0 0 10px rgba(255, 106, 0, 0.3);
 }
 
-/* Custom scrollbars */
+/* Hide scrollbars but keep functionality */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -82,81 +86,88 @@ body {
   scrollbar-width: none;
 }
 
+/* Custom scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(11, 11, 18, 0.5);
+  background: rgba(10, 10, 10, 0.5);
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.3);
+  background: rgba(255, 106, 0, 0.3);
   border-radius: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 46, 147, 0.5);
+  background: rgba(255, 106, 0, 0.5);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #FF2E93 0%, #7C3AED 50%, #FF8A00 100%);
+  background: linear-gradient(135deg, #FF6A00 0%, #FF8F3D 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* ============================================================== */
-/* ☀️ LIGHT THEME ADAPTER - 100% SPEC COMPLIANT WITH LIGHT MODE UI */
+/* ☀️ LIGHT THEME CONFIGURATION (White, Black, Orange Theme Specs) */
 /* ============================================================== */
 :root.light {
-  --background: #F5F5F5;
-  --foreground: #111111;
+  --background: #FFFFFF;
+  --foreground: #0A0A0A;
   --card: #FFFFFF;
-  --card-elevated: #FAFAFA;
-  --text: #111111;
+  --card-elevated: #F5F5F5;
+  --purple: #FF6A00;
+  --pink: #FF6A00;
+  --orange: #FF6A00;
+  --soft-orange: #FFF3E8; /* Soft orange background */
+  --text: #0A0A0A;
   --gray-text: #6B7280;
+  --border-theme: #E5E7EB;
 }
 
 :root.light body {
-  background-color: #F5F5F5 !important;
-  color: #111111 !important;
+  background-color: #FFFFFF !important;
+  color: #0A0A0A !important;
 }
 
-/* 1. Page Background Adapters */
+/* 1. Page Background Overrides */
 :root.light .bg-background,
-:root.light .bg-\[\#0B0B12\] {
-  background-color: #F5F5F5 !important;
-}
-
-/* 2. Card Background Adapters (Feed cards) */
-:root.light .bg-card,
-:root.light .bg-\[\#12131C\],
+:root.light .bg-\[\#0B0B12\],
 :root.light .bg-\[\#0B0C10\] {
   background-color: #FFFFFF !important;
 }
 
-/* 3. Elevated Card Background Adapters */
+/* 2. Card Background Overrides */
+:root.light .bg-card,
+:root.light .bg-\[\#12131C\] {
+  background-color: #FFFFFF !important;
+}
+
+/* 3. Elevated Card Background Overrides */
 :root.light .bg-card-elevated,
 :root.light .glass-effect,
 :root.light .glass-effect-card {
-  background-color: #FAFAFA !important;
-  background: #FAFAFA !important;
+  background-color: #F5F5F5 !important;
+  background: #F5F5F5 !important;
 }
 
-/* Nesting support for elevated bubbles inside feed cards (like Top Comments) */
+/* Nesting overrides for comment bubbles in Light Mode */
 :root.light .bg-\[\#12131C\] .bg-\[\#12131C\],
 :root.light .bg-card .bg-card,
+:root.light .bg-card-elevated .bg-card-elevated,
 :root.light .bg-\[\#0B0C10\] .bg-\[\#12131C\],
-:root.light .bg-card-elevated .bg-card-elevated {
-  background-color: #FAFAFA !important;
-  background: #FAFAFA !important;
+:root.light .bg-card .bg-card-elevated {
+  background-color: #F5F5F5 !important;
+  background: #F5F5F5 !important;
 }
 
-/* 4. Text Color Overrides */
+/* 4. Text Overrides */
 :root.light .text-white,
 :root.light .text-white\/95,
 :root.light .text-white\/90,
 :root.light .text-white\/80,
 :root.light .text-white\/75 {
-  color: #111111 !important;
+  color: #0A0A0A !important;
 }
 
 :root.light .text-gray-text,
@@ -165,15 +176,32 @@ body {
   color: #6B7280 !important;
 }
 
-/* 5. Border Color Overrides */
+/* 5. Border Overrides */
 :root.light .border-white\/5,
 :root.light .border-white\/8,
 :root.light .border-white\/10 {
   border-color: #E5E7EB !important;
 }
 
-/* 6. Specific adjustments for SVG line colors and icons in light mode navigation */
+/* 6. Action button glow adjustments */
 :root.light .stroke-white,
 :root.light .text-gray-text:hover {
-  color: #111111 !important;
+  color: #0A0A0A !important;
+}
+
+/* Glow resets in light mode to avoid neon purples/pinks */
+:root.light .shadow-\[0_0_12px_rgba\(255\,46\,147\,0\.35\)\] {
+  box-shadow: 0 4px 12px rgba(255, 106, 0, 0.2) !important;
+}
+
+:root.light .shadow-\[0_0_15px_rgba\(255\,46\,147\,0\.45\)\] {
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.25) !important;
+}
+
+/* Legacy gradient text redirects to solid black in light mode, orange in dark mode */
+:root.light .text-gradient {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  color: #0A0A0A !important;
 }

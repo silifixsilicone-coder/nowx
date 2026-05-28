@@ -174,7 +174,7 @@ export default function Home() {
                           }}
                           className={`flex items-center gap-1 px-4.5 py-1.8 rounded-full text-xs font-black transition-all cursor-pointer border ${
                             isActive 
-                              ? 'bg-gradient-to-r from-purple via-pink to-orange border-transparent text-white shadow-[0_0_12px_rgba(255,46,147,0.35)]' 
+                              ? 'bg-[#FF6A00] border-transparent text-white shadow-[0_4px_12px_rgba(255,106,0,0.2)]' 
                               : 'bg-[#12131C] border-white/5 text-gray-text hover:text-white hover:bg-white/10'
                           }`}
                         >
@@ -192,8 +192,8 @@ export default function Home() {
                       onClick={() => setIsCreateModalOpen(true)}
                       className="flex flex-col items-center gap-1.5 cursor-pointer select-none flex-shrink-0"
                     >
-                      <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-purple/40 bg-purple/5 hover:bg-purple/10 hover:border-purple transition-all">
-                        <Plus className="h-6 w-6 text-purple" />
+                      <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-[#FF6A00]/40 bg-[#FF6A00]/5 hover:bg-[#FF6A00]/10 hover:border-[#FF6A00] transition-all">
+                        <Plus className="h-6 w-6 text-[#FF6A00]" />
                       </div>
                       <span className="text-[10px] font-bold text-gray-text">Create</span>
                     </div>
@@ -240,7 +240,7 @@ export default function Home() {
                         {/* Gradient action button */}
                         <button
                           onClick={() => alert("Welcome to the World Cup Celebration Stadium! 🏏🏆")}
-                          className="text-[10px] font-black uppercase tracking-wider text-white px-4.5 py-2.2 rounded-xl bg-gradient-to-r from-purple via-pink to-orange hover:shadow-[0_0_15px_rgba(255,46,147,0.45)] transition-all cursor-pointer shadow-md select-none active:scale-95 flex items-center justify-center w-fit border border-white/10"
+                          className="text-[10px] font-black uppercase tracking-wider text-white px-4.5 py-2.2 rounded-xl bg-[#FF6A00] hover:bg-[#FF8024] hover:shadow-[0_4px_15px_rgba(255,106,0,0.25)] transition-all cursor-pointer shadow-md select-none active:scale-95 flex items-center justify-center w-fit border border-white/10"
                         >
                           Join the Celebration
                         </button>
