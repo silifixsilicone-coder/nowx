@@ -147,119 +147,31 @@ export default function Home() {
               className="h-full w-full"
             >
               
-              {/* --- VIEW: HOME FEED (Instagram/Reddit layout) --- */}
+              {/* --- VIEW: HOME FEED (Instagram/Reels layout) --- */}
               {currentView === 'home' && (
-                <div className="max-w-2xl mx-auto w-full space-y-6">
+                <div className="w-full max-w-[420px] mx-auto h-[calc(100vh-6.5rem)] border border-white/10 rounded-[36px] overflow-hidden bg-[#0A0A0A] relative shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_rgba(255,106,0,0.05)] flex flex-col justify-between group">
                   
-                  {/* Category tabs exactly styled like the attached screenshot */}
-                  <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth">
-                    {[
-                      { id: 'forYou', label: 'For You', icon: '' },
-                      { id: 'trending', label: 'Trending', icon: '' },
-                      { id: 'roast', label: 'Roast 🔥', icon: '' },
-                      { id: 'hype', label: 'Hype ❤️', icon: '' },
-                      { id: 'memes', label: 'Memes 😂', icon: '' },
-                    ].map((tab) => {
-                      const isActive = activeHomeTab === tab.id;
-                      return (
-                        <motion.button
-                          key={tab.id}
-                          whileHover={{ scale: 1.04 }}
-                          whileTap={{ scale: 0.96 }}
-                          onClick={() => {
-                            setActiveHomeTab(tab.id);
-                            if (tab.id === 'battles_tab') {
-                              setCurrentView('battles');
-                            }
-                          }}
-                          className={`flex items-center gap-1 px-4.5 py-1.8 rounded-full text-xs font-black transition-all cursor-pointer border ${
-                            isActive 
-                              ? 'bg-[#FF6A00] border-transparent text-white shadow-[0_4px_12px_rgba(255,106,0,0.2)]' 
-                              : 'bg-[#12131C] border-white/5 text-gray-text hover:text-white hover:bg-white/10'
-                          }`}
-                        >
-                          <span>{tab.label}</span>
-                        </motion.button>
-                      );
-                    })}
+                  {/* Cinematic Top Header Overlay */}
+                  <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/60 to-transparent pointer-events-none select-none">
+                    <span className="text-sm font-black text-[#FF6A00] tracking-wider pointer-events-auto">
+                      ReactVerse
+                    </span>
+                    <div className="flex items-center gap-4 pointer-events-auto text-xs font-black">
+                      <button className="text-gray-text hover:text-white transition-colors cursor-pointer">Following</button>
+                      <button className="text-white relative pb-1 cursor-pointer">
+                        For You
+                        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#FF6A00] rounded-full" />
+                      </button>
+                    </div>
+                    <button className="text-white hover:text-[#FF6A00] transition-colors pointer-events-auto cursor-pointer">
+                      <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </button>
                   </div>
 
-                  {/* Story Tray (Horizontal Scroll Card List) */}
-                  <div className="glass-effect rounded-[28px] p-4 flex gap-4 overflow-x-auto no-scrollbar items-center border border-white/5 bg-white/[0.01]">
-                    
-                    {/* Self post quick composer shortcut */}
-                    <div
-                      onClick={() => setIsCreateModalOpen(true)}
-                      className="flex flex-col items-center gap-1.5 cursor-pointer select-none flex-shrink-0"
-                    >
-                      <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-[#FF6A00]/40 bg-[#FF6A00]/5 hover:bg-[#FF6A00]/10 hover:border-[#FF6A00] transition-all">
-                        <Plus className="h-6 w-6 text-[#FF6A00]" />
-                      </div>
-                      <span className="text-[10px] font-bold text-gray-text">Create</span>
-                    </div>
-
-                    {/* Other stories list */}
-                    {mockStories.map((story, index) => (
-                      <StoryCircle
-                        key={story.id}
-                        story={story}
-                        onClick={() => handleStoryClick(index)}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Today's Spotlight card exactly like in the attached screenshot */}
-                  <motion.div
-                    initial={{ scale: 0.98, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative rounded-[28px] overflow-hidden p-5 border border-white/5 bg-[#12131C] shadow-[0_4px_30px_rgba(0,0,0,0.4)] flex justify-between items-center group cursor-pointer"
-                  >
-                    {/* Decorative backglow overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-                    
-                    {/* Left contents */}
-                    <div className="space-y-4 max-w-[58%] relative z-10 flex flex-col justify-between h-full">
-                      <div className="space-y-2">
-                        {/* Capsule badge */}
-                        <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase text-white tracking-widest px-3 py-1 bg-white/5 border border-white/10 rounded-full w-fit">
-                          <span>Spotlight</span>
-                          <span className="text-orange animate-pulse">🔥</span>
-                        </span>
-
-                        <h3 className="text-base sm:text-lg font-black text-white leading-snug drop-shadow-md">
-                          Team India Wins <br />The World Cup 🏆🇮🇳
-                        </h3>
-                      </div>
-
-                      <div className="space-y-3 pt-1">
-                        <span className="text-[9.5px] text-gray-text font-bold block uppercase tracking-wider">
-                          24.8K people reacted  •  8.7K comments
-                        </span>
-
-                        {/* Gradient action button */}
-                        <button
-                          onClick={() => alert("Welcome to the World Cup Celebration Stadium! 🏏🏆")}
-                          className="text-[10px] font-black uppercase tracking-wider text-white px-4.5 py-2.2 rounded-xl bg-[#FF6A00] hover:bg-[#FF8024] hover:shadow-[0_4px_15px_rgba(255,106,0,0.25)] transition-all cursor-pointer shadow-md select-none active:scale-95 flex items-center justify-center w-fit border border-white/10"
-                        >
-                          Join the Celebration
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Right side image exactly matching the cricket team celebration backdrop */}
-                    <div className="w-[38%] aspect-square rounded-2xl overflow-hidden border border-white/10 relative z-10">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src="https://images.unsplash.com/photo-1540747737956-37872404f8c1?w=400&h=400&fit=crop"
-                        alt="World Cup Celebration"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                    </div>
-                  </motion.div>
-
-                  {/* Posts Cards list loop */}
-                  <div className="space-y-6">
+                  {/* Scrollable Snap reels list */}
+                  <div className="flex-1 w-full h-full overflow-y-scroll snap-y snap-mandatory no-scrollbar scroll-smooth">
                     {filteredPosts.map((post) => (
                       <FeedCard
                         key={post.id}
