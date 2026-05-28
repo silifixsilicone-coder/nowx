@@ -28,146 +28,64 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-effect transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full glass-effect border-b border-white/5 transition-all duration-300">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Brand Logo */}
         <div className="flex items-center gap-1.5 cursor-pointer select-none" onClick={() => onViewChange('home')}>
-          <motion.div
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-            className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-pink via-purple to-orange shadow-md shadow-purple/30 flex-shrink-0"
-          >
-            <Sparkles className="h-4.5 w-4.5 text-white" />
-          </motion.div>
-          <span className="text-base font-black tracking-wider text-gradient hidden sm:block">
+          <span className="text-lg font-black tracking-wider bg-gradient-to-r from-purple via-pink to-orange bg-clip-text text-transparent hover:brightness-110 transition-all">
             ReactVerse
           </span>
         </div>
 
-        {/* Search Bar - Responsive layout visible everywhere */}
-        <div className="flex relative flex-1 max-w-[140px] xs:max-w-[180px] sm:max-w-md mx-2 sm:mx-6">
-          <div className="relative w-full">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
-              <Search className={`h-3.5 w-3.5 transition-colors ${isSearchFocused ? 'text-purple' : 'text-gray-text'}`} />
-            </span>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                if (onSearch) onSearch(e.target.value);
-              }}
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs bg-white/5 border border-white/10 rounded-full focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple/20 text-white placeholder-gray-text transition-all duration-300"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => {
-                  setSearchQuery('');
-                  if (onSearch) onSearch('');
-                }}
-                className="absolute inset-y-0 right-0 flex items-center pr-2.5 text-gray-text hover:text-white"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Quick Right Side Actions */}
-        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+        {/* Quick Right Side Actions (Clean & Premium exactly like the attached image) */}
+        <div className="flex items-center gap-2.5 flex-shrink-0">
           
-          {/* Create Post Action (Lucide Quick add) - Desktop only */}
+          {/* Search Trigger Icon */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={onCreatePostClick}
-            className="hidden md:flex h-8 items-center gap-1.5 px-3.5 text-xs font-bold tracking-wide rounded-xl bg-purple/10 text-purple border border-purple/20 hover:bg-purple/25 cursor-pointer transition-all"
+            onClick={() => alert("Search activation drawer loaded!")}
+            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 border border-white/5 text-gray-text hover:text-white transition-all cursor-pointer"
           >
-            <span>Post</span>
-            <span>+</span>
+            <Search className="h-4.5 w-4.5" />
           </motion.button>
 
-          {/* Discord/DM channel quick toggle - Desktop only */}
-          <div className="relative hidden md:block">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onViewChange('chat')}
-              className={`flex h-8 w-8 items-center justify-center rounded-xl bg-white/5 border text-gray-text hover:text-white transition-all cursor-pointer ${
-                currentView === 'chat' ? 'border-purple/50 bg-purple/10 text-purple' : 'border-white/5'
-              }`}
-            >
-              <MessageSquareCode className="h-4.5 w-4.5" />
-              <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-pink text-[8px] font-bold text-white shadow-md shadow-pink/30">
-                1
-              </span>
-            </motion.button>
-          </div>
-
-          {/* Notifications Notification Drawer - Mobile First Bell Icon */}
+          {/* Notifications Notification drawer trigger */}
           <div className="relative">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setShowNotifications(!showNotifications)}
-              className={`flex h-8 w-8 items-center justify-center rounded-xl bg-white/5 border text-gray-text hover:text-white transition-all cursor-pointer ${
-                showNotifications ? 'border-purple/50 bg-purple/10 text-purple' : 'border-white/5'
+              onClick={() => onViewChange('notifications')}
+              className={`flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 border text-gray-text hover:text-white transition-all cursor-pointer ${
+                currentView === 'notifications' ? 'border-purple/50 bg-purple/10 text-purple' : 'border-white/5'
               }`}
             >
               <Bell className="h-4.5 w-4.5" />
-              <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-orange text-[8px] font-bold text-white shadow-md shadow-orange/30">
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8.5px] font-black text-white border border-[#0B0B12] shadow-md">
                 3
               </span>
             </motion.button>
-
-            {/* Notification Dropdown Panel */}
-            <AnimatePresence>
-              {showNotifications && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
-                  <motion.div
-                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-3 w-80 rounded-2xl glass-effect-card p-4 shadow-2xl z-50"
-                  >
-                    <div className="flex items-center justify-between border-b border-white/5 pb-2 mb-3">
-                      <h4 className="text-sm font-bold text-white">Notifications</h4>
-                      <button className="text-xs text-purple hover:underline">Mark all read</button>
-                    </div>
-                    <div className="space-y-3">
-                      {mockNotifications.map((notif) => (
-                        <div key={notif.id} className="flex gap-3 hover:bg-white/5 p-2 rounded-xl transition-colors cursor-pointer">
-                          <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-pink to-purple flex items-center justify-center text-xs font-bold">
-                            {notif.user[0].toUpperCase()}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs text-white">
-                              <span className="font-bold">@{notif.user}</span> {notif.text}
-                            </p>
-                            <span className="text-[10px] text-gray-text">{notif.time}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
           </div>
 
-          {/* User Avatar Direct Navigation to Profile - Mobile first Avatar */}
+          {/* Premium React-Points gold coin pill button exactly like in the attached image */}
+          <motion.div
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => onViewChange('profile')}
+            className="flex h-9 items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-amber-500/10 to-orange/10 border border-amber-500/30 rounded-full cursor-pointer shadow-md"
+          >
+            <span className="text-[12px] animate-pulse">🪙</span>
+            <span className="text-[10px] font-black text-amber-400 tracking-wide uppercase leading-none">12.4K</span>
+          </motion.div>
+
+          {/* Circular user avatar for connection */}
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onViewChange('profile')}
-            className={`h-8 w-8 rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${
-              currentView === 'profile' ? 'border-purple shadow-md shadow-purple/30' : 'border-transparent'
+            className={`h-9 w-9 rounded-full overflow-hidden border-2 cursor-pointer transition-all ${
+              currentView === 'profile' ? 'border-purple shadow-md shadow-purple/30' : 'border-white/10'
             }`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
