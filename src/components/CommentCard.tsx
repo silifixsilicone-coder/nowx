@@ -25,7 +25,7 @@ export const CommentCard: React.FC<CommentCardProps> = ({
   const [editValue, setEditValue] = useState(comment.content);
   const [showOptions, setShowOptions] = useState(false);
 
-  const isOwner = comment.user.username === 'react_dev_99'; // Matches currentUser in mock data
+  const isOwner = comment.user.username === 'RoastMaster_99'; // Matches currentUser in mock data
 
   const handleLike = () => {
     if (isLiked) {

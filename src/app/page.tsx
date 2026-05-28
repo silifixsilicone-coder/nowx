@@ -149,230 +149,128 @@ export default function Home() {
               
               {/* --- VIEW: HOME FEED (Instagram/Reddit layout) --- */}
               {currentView === 'home' && (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                <div className="max-w-2xl mx-auto w-full space-y-6">
                   
-                  {/* Left columns (Stories + Posts list) */}
-                  <div className="lg:col-span-2 space-y-6">
-                    
-                    {/* Category tabs exactly styled like the attached screenshot */}
-                    <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth">
-                      {[
-                        { id: 'forYou', label: 'For You', icon: '' },
-                        { id: 'trending', label: 'Trending', icon: '' },
-                        { id: 'roast', label: 'Roast 🔥', icon: '' },
-                        { id: 'hype', label: 'Hype ❤️', icon: '' },
-                        { id: 'memes', label: 'Memes 😂', icon: '' },
-                      ].map((tab) => {
-                        const isActive = activeHomeTab === tab.id;
-                        return (
-                          <motion.button
-                            key={tab.id}
-                            whileHover={{ scale: 1.04 }}
-                            whileTap={{ scale: 0.96 }}
-                            onClick={() => {
-                              setActiveHomeTab(tab.id);
-                              if (tab.id === 'battles_tab') {
-                                setCurrentView('battles');
-                              }
-                            }}
-                            className={`flex items-center gap-1 px-4.5 py-1.8 rounded-full text-xs font-black transition-all cursor-pointer border ${
-                              isActive 
-                                ? 'bg-gradient-to-r from-purple via-pink to-orange border-transparent text-white shadow-[0_0_12px_rgba(255,46,147,0.35)]' 
-                                : 'bg-[#12131C] border-white/5 text-gray-text hover:text-white hover:bg-white/10'
-                            }`}
-                          >
-                            <span>{tab.label}</span>
-                          </motion.button>
-                        );
-                      })}
-                    </div>
-
-                    {/* Story Tray (Horizontal Scroll Card List) */}
-                    <div className="glass-effect rounded-[28px] p-4 flex gap-4 overflow-x-auto no-scrollbar items-center border border-white/5 bg-white/[0.01]">
-                      
-                      {/* Self post quick composer shortcut */}
-                      <div
-                        onClick={() => setIsCreateModalOpen(true)}
-                        className="flex flex-col items-center gap-1.5 cursor-pointer select-none flex-shrink-0"
-                      >
-                        <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-purple/40 bg-purple/5 hover:bg-purple/10 hover:border-purple transition-all">
-                          <Plus className="h-6 w-6 text-purple" />
-                        </div>
-                        <span className="text-[10px] font-bold text-gray-text">Create</span>
-                      </div>
-
-                      {/* Other stories list */}
-                      {mockStories.map((story, index) => (
-                        <StoryCircle
-                          key={story.id}
-                          story={story}
-                          onClick={() => handleStoryClick(index)}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Today's Spotlight card exactly like in the attached screenshot */}
-                    <motion.div
-                      initial={{ scale: 0.98, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="relative rounded-[28px] overflow-hidden p-5 border border-white/5 bg-[#12131C] shadow-[0_4px_30px_rgba(0,0,0,0.4)] flex justify-between items-center group cursor-pointer"
-                    >
-                      {/* Decorative backglow overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-                      
-                      {/* Left contents */}
-                      <div className="space-y-4 max-w-[58%] relative z-10 flex flex-col justify-between h-full">
-                        <div className="space-y-2">
-                          {/* Capsule badge */}
-                          <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase text-white tracking-widest px-3 py-1 bg-white/5 border border-white/10 rounded-full w-fit">
-                            <span>Spotlight</span>
-                            <span className="text-orange animate-pulse">🔥</span>
-                          </span>
-
-                          <h3 className="text-base sm:text-lg font-black text-white leading-snug drop-shadow-md">
-                            Team India Wins <br />The World Cup 🏆🇮🇳
-                          </h3>
-                        </div>
-
-                        <div className="space-y-3 pt-1">
-                          <span className="text-[9.5px] text-gray-text font-bold block uppercase tracking-wider">
-                            24.8K people reacted  •  8.7K comments
-                          </span>
-
-                          {/* Gradient action button */}
-                          <button
-                            onClick={() => alert("Welcome to the World Cup Celebration Stadium! 🏏🏆")}
-                            className="text-[10px] font-black uppercase tracking-wider text-white px-4.5 py-2.2 rounded-xl bg-gradient-to-r from-purple via-pink to-orange hover:shadow-[0_0_15px_rgba(255,46,147,0.45)] transition-all cursor-pointer shadow-md select-none active:scale-95 flex items-center justify-center w-fit border border-white/10"
-                          >
-                            Join the Celebration
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Right side image exactly matching the cricket team celebration backdrop */}
-                      <div className="w-[38%] aspect-square rounded-2xl overflow-hidden border border-white/10 relative z-10">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src="https://images.unsplash.com/photo-1540747737956-37872404f8c1?w=400&h=400&fit=crop"
-                          alt="World Cup Celebration"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                      </div>
-                    </motion.div>
-
-                    {/* Posts Cards list loop */}
-                    <div className="space-y-6">
-                      {filteredPosts.map((post) => (
-                        <FeedCard
-                          key={post.id}
-                          post={post}
-                          onLike={(id) => console.log('Liked post:', id)}
-                          onCommentClick={(id) => {
-                            setSelectedPostId(id);
-                            setCurrentView('comments');
+                  {/* Category tabs exactly styled like the attached screenshot */}
+                  <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth">
+                    {[
+                      { id: 'forYou', label: 'For You', icon: '' },
+                      { id: 'trending', label: 'Trending', icon: '' },
+                      { id: 'roast', label: 'Roast 🔥', icon: '' },
+                      { id: 'hype', label: 'Hype ❤️', icon: '' },
+                      { id: 'memes', label: 'Memes 😂', icon: '' },
+                    ].map((tab) => {
+                      const isActive = activeHomeTab === tab.id;
+                      return (
+                        <motion.button
+                          key={tab.id}
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={{ scale: 0.96 }}
+                          onClick={() => {
+                            setActiveHomeTab(tab.id);
+                            if (tab.id === 'battles_tab') {
+                              setCurrentView('battles');
+                            }
                           }}
-                        />
-                      ))}
-                    </div>
-
+                          className={`flex items-center gap-1 px-4.5 py-1.8 rounded-full text-xs font-black transition-all cursor-pointer border ${
+                            isActive 
+                              ? 'bg-gradient-to-r from-purple via-pink to-orange border-transparent text-white shadow-[0_0_12px_rgba(255,46,147,0.35)]' 
+                              : 'bg-[#12131C] border-white/5 text-gray-text hover:text-white hover:bg-white/10'
+                          }`}
+                        >
+                          <span>{tab.label}</span>
+                        </motion.button>
+                      );
+                    })}
                   </div>
 
-                  {/* Right Column Widget section (Desktop only) */}
-                  <div className="hidden lg:block space-y-6">
+                  {/* Story Tray (Horizontal Scroll Card List) */}
+                  <div className="glass-effect rounded-[28px] p-4 flex gap-4 overflow-x-auto no-scrollbar items-center border border-white/5 bg-white/[0.01]">
                     
-                    {/* User Mini card points widget */}
-                    <div className="glass-effect-card rounded-2xl p-4 space-y-4">
-                      <div className="flex items-center gap-3">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={currentUser.avatar}
-                          alt="Alex"
-                          className="h-10 w-10 rounded-xl object-cover border border-white/10"
-                        />
-                        <div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-xs font-black text-white">{currentUser.displayName}</span>
-                            <span className="text-[10px] text-purple">⚡</span>
-                          </div>
-                          <span className="text-[10px] text-gray-text">@{currentUser.username}</span>
-                        </div>
+                    {/* Self post quick composer shortcut */}
+                    <div
+                      onClick={() => setIsCreateModalOpen(true)}
+                      className="flex flex-col items-center gap-1.5 cursor-pointer select-none flex-shrink-0"
+                    >
+                      <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-purple/40 bg-purple/5 hover:bg-purple/10 hover:border-purple transition-all">
+                        <Plus className="h-6 w-6 text-purple" />
                       </div>
-                      <div className="grid grid-cols-2 gap-2 border-t border-white/5 pt-3">
-                        <div className="bg-white/5 rounded-xl p-2.5 text-center">
-                          <span className="text-[9px] font-bold text-gray-text uppercase block">React-Points</span>
-                          <span className="text-sm font-black text-gradient">15.4k</span>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-2.5 text-center">
-                          <span className="text-[9px] font-bold text-gray-text uppercase block">Contributors</span>
-                          <span className="text-sm font-black text-orange">Top 2%</span>
-                        </div>
+                      <span className="text-[10px] font-bold text-gray-text">Create</span>
+                    </div>
+
+                    {/* Other stories list */}
+                    {mockStories.map((story, index) => (
+                      <StoryCircle
+                        key={story.id}
+                        story={story}
+                        onClick={() => handleStoryClick(index)}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Today's Spotlight card exactly like in the attached screenshot */}
+                  <motion.div
+                    initial={{ scale: 0.98, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative rounded-[28px] overflow-hidden p-5 border border-white/5 bg-[#12131C] shadow-[0_4px_30px_rgba(0,0,0,0.4)] flex justify-between items-center group cursor-pointer"
+                  >
+                    {/* Decorative backglow overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+                    
+                    {/* Left contents */}
+                    <div className="space-y-4 max-w-[58%] relative z-10 flex flex-col justify-between h-full">
+                      <div className="space-y-2">
+                        {/* Capsule badge */}
+                        <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase text-white tracking-widest px-3 py-1 bg-white/5 border border-white/10 rounded-full w-fit">
+                          <span>Spotlight</span>
+                          <span className="text-orange animate-pulse">🔥</span>
+                        </span>
+
+                        <h3 className="text-base sm:text-lg font-black text-white leading-snug drop-shadow-md">
+                          Team India Wins <br />The World Cup 🏆🇮🇳
+                        </h3>
+                      </div>
+
+                      <div className="space-y-3 pt-1">
+                        <span className="text-[9.5px] text-gray-text font-bold block uppercase tracking-wider">
+                          24.8K people reacted  •  8.7K comments
+                        </span>
+
+                        {/* Gradient action button */}
+                        <button
+                          onClick={() => alert("Welcome to the World Cup Celebration Stadium! 🏏🏆")}
+                          className="text-[10px] font-black uppercase tracking-wider text-white px-4.5 py-2.2 rounded-xl bg-gradient-to-r from-purple via-pink to-orange hover:shadow-[0_0_15px_rgba(255,46,147,0.45)] transition-all cursor-pointer shadow-md select-none active:scale-95 flex items-center justify-center w-fit border border-white/10"
+                        >
+                          Join the Celebration
+                        </button>
                       </div>
                     </div>
 
-                    {/* Suggested communities list */}
-                    <div className="glass-effect rounded-2xl p-4 space-y-3 border border-white/5 bg-white/[0.01]">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-gray-text/75">
-                        Trending Spaces
-                      </p>
-                      
-                      <div className="space-y-3">
-                        {[
-                          { name: 'r/nextjs', count: '14.2k active', icon: '⚛️' },
-                          { name: 'r/tailwind', count: '8.4k active', icon: '🎨' },
-                          { name: 'r/digitalart', count: '11.5k active', icon: '🌌' },
-                        ].map((item) => (
-                          <div key={item.name} className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm">{item.icon}</span>
-                              <div>
-                                <span className="text-xs font-extrabold text-white block hover:underline cursor-pointer">
-                                  {item.name}
-                                </span>
-                                <span className="text-[9px] text-gray-text block">{item.count}</span>
-                              </div>
-                            </div>
-                            <button className="text-[9px] font-bold text-purple bg-purple/10 px-2.5 py-1 rounded-lg border border-purple/20 hover:bg-purple/20 transition-all cursor-pointer">
-                              Join
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-
+                    {/* Right side image exactly matching the cricket team celebration backdrop */}
+                    <div className="w-[38%] aspect-square rounded-2xl overflow-hidden border border-white/10 relative z-10">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="https://images.unsplash.com/photo-1540747737956-37872404f8c1?w=400&h=400&fit=crop"
+                        alt="World Cup Celebration"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
                     </div>
+                  </motion.div>
 
-                    {/* Suggested friends list to follow */}
-                    <div className="glass-effect rounded-2xl p-4 space-y-3 border border-white/5 bg-white/[0.01]">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-gray-text/75">
-                        Spaces Innovators
-                      </p>
-
-                      <div className="space-y-3">
-                        {mockUsers.slice(0, 3).map((item) => (
-                          <div key={item.id} className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src={item.avatar}
-                                alt={item.displayName}
-                                className="h-7 w-7 rounded-lg object-cover"
-                              />
-                              <div>
-                                <span className="text-xs font-bold text-white block truncate max-w-[100px]">
-                                  {item.displayName}
-                                </span>
-                                <span className="text-[9px] text-gray-text block">@{item.username}</span>
-                              </div>
-                            </div>
-                            <button className="text-[9px] font-bold text-pink bg-pink/10 px-2.5 py-1 rounded-lg border border-pink/20 hover:bg-pink/20 transition-all cursor-pointer">
-                              Follow
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-
-                    </div>
-
+                  {/* Posts Cards list loop */}
+                  <div className="space-y-6">
+                    {filteredPosts.map((post) => (
+                      <FeedCard
+                        key={post.id}
+                        post={post}
+                        onLike={(id) => console.log('Liked post:', id)}
+                        onCommentClick={(id) => {
+                          setSelectedPostId(id);
+                          setCurrentView('comments');
+                        }}
+                      />
+                    ))}
                   </div>
 
                 </div>

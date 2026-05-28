@@ -266,7 +266,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                 <label className="text-[10px] font-black uppercase text-gray-text tracking-wider pl-1">Username or Email</label>
                 <input
                   type="text"
-                  placeholder="e.g. react_dev_99"
+                  placeholder="e.g. RoastMaster_99"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full bg-[#1A1D29] border border-white/5 rounded-2xl px-4 py-3 text-xs text-white placeholder-gray-text/60 focus:outline-none focus:border-purple/50 focus:ring-1 focus:ring-purple/20 transition-all duration-200"

@@ -75,8 +75,8 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
       id: `new_${Date.now()}`,
       user: {
         id: 'me',
-        username: 'react_dev_99',
-        displayName: 'Alex Rivers',
+        username: 'RoastMaster_99',
+        displayName: 'Samar Singh',
         avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face',
         isVerified: true,
       },
@@ -165,7 +165,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
               <span className="text-xs font-black text-white hover:underline cursor-pointer block leading-none">
-                {post.user.username === 'react_dev_99' ? 'MemeLord' : post.user.displayName}
+                {post.user.displayName}
               </span>
               <span className="text-[10px] text-cyan-400 font-bold">✓</span>
             </div>
@@ -188,7 +188,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
       <div className="grid grid-cols-[1fr_auto] gap-4 items-start pt-0.5">
         <div className="min-w-0 pr-1.5">
           <p className="text-xs text-white/95 leading-relaxed font-semibold break-words">
-            {post.content.includes('Roast') ? 'Australia airplane mode me hai. ✈️📴😂' : post.content}
+            {post.content}
           </p>
         </div>
         
@@ -262,7 +262,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
             <div className="flex-1 min-w-0 pr-14">
               <div className="flex items-center gap-1 mb-1">
                 <span className="text-[10px] font-black text-white hover:underline cursor-pointer block leading-none">
-                  {topComment.user.username === 'react_dev_99' ? 'Sarcastic_King' : topComment.user.username}
+                  {topComment.user.username}
                 </span>
                 <span className="text-[9px] text-yellow-500">👑</span>
                 <span className="text-[8.5px] text-gray-text font-bold block ml-1 leading-none">
@@ -270,7 +270,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
                 </span>
               </div>
               <p className="text-[10px] text-white/90 leading-relaxed break-words font-medium pl-0.5">
-                {post.content.includes('Roast') ? 'Australian team ko ab VPN ki zarurat hai. 🌐😂' : topComment.content}
+                {topComment.content}
               </p>
             </div>
 

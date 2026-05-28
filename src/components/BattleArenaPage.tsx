@@ -76,7 +76,7 @@ export const BattleArenaPage: React.FC<BattleArenaPageProps> = ({ onBack }) => {
 
     const freshComment = {
       id: `c_${Date.now()}`,
-      user: 'react_dev_99',
+      user: 'RoastMaster_99',
       text: newComment,
       likes: 1,
     };

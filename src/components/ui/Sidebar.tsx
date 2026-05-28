@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Home, Tv, MessageSquare, User, Bell, Swords, Flame, Settings, Sparkles } from 'lucide-react';
+import { Home, User, Bell, Swords, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { mockDiscordServers, currentUser } from '@/data/mockData';
+import { currentUser } from '@/data/mockData';
 
 interface SidebarProps {
   currentView: string;
@@ -16,17 +16,13 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({
   currentView,
   onViewChange,
-  activeServerId = 'server_react',
-  onServerChange,
   unreadNotificationsCount = 0
 }) => {
   const primaryNavs = [
-    { id: 'home', icon: Home, label: 'Home Feed' },
+    { id: 'home', icon: Home, label: 'Home' },
+    { id: 'battles', icon: Swords, label: 'Battles' },
     { id: 'notifications', icon: Bell, label: 'Notifications' },
-    { id: 'watch', icon: Tv, label: 'ReactTV Shorts' },
-    { id: 'battles', icon: Swords, label: 'Creator Battles' },
-    { id: 'chat', icon: MessageSquare, label: 'Discord Spaces' },
-    { id: 'profile', icon: User, label: 'Profile Hub' },
+    { id: 'profile', icon: User, label: 'Profile' },
   ];
 
   return (
@@ -73,58 +69,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
             );
           })}
-        </div>
-
-        {/* Discord / Communities Section */}
-        <div className="space-y-2">
-          <p className="px-3 text-[10px] font-black uppercase tracking-widest text-gray-text/60 mb-2">
-            Popular Servers
-          </p>
-          <div className="space-y-1">
-            {mockDiscordServers.map((server) => {
-              const isSelected = activeServerId === server.id && currentView === 'chat';
-              
-              return (
-                <button
-                  key={server.id}
-                  onClick={() => {
-                    if (onServerChange) onServerChange(server.id);
-                    onViewChange('chat');
-                  }}
-                  className={`flex w-full items-center gap-3 px-3 py-2 text-xs font-bold rounded-lg transition-all border cursor-pointer ${
-                    isSelected
-                      ? 'bg-purple/10 border-purple/30 text-purple'
-                      : 'border-transparent text-gray-text hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <span className="flex h-6 w-6 items-center justify-center rounded bg-white/5 text-xs text-center">
-                    {server.icon}
-                  </span>
-                  <span className="truncate">{server.name}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Trending Tags (Instagram + Reddit mix) */}
-        <div className="space-y-2">
-          <p className="px-3 text-[10px] font-black uppercase tracking-widest text-gray-text/60 mb-2">
-            Trending Space
-          </p>
-          <div className="space-y-1">
-            {['#react19', '#tailwind_v4', '#framer_motion', '#rust_wasm'].map((tag) => (
-              <a
-                key={tag}
-                href="#"
-                onClick={(e) => e.preventDefault()}
-                className="flex items-center gap-2 px-3 py-1.5 text-xs text-gray-text hover:text-pink transition-all font-medium"
-              >
-                <Flame className="h-3.5 w-3.5 text-orange" />
-                <span>{tag}</span>
-              </a>
-            ))}
-          </div>
         </div>
 
       </div>

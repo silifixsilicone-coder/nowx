@@ -70,7 +70,7 @@ export const NotificationsPage: React.FC<NotificationsPageProps> = ({
         displayName: 'Meme Lord',
         avatar: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100&h=100&fit=crop',
       },
-      text: 'replied to your comment: "Next.js dev server starts in 0.1s but npm install takes 5 years 💀"',
+      text: 'replied to your comment: "Cummins crying in his press conference after the match 💀"',
       timestamp: '12m',
       previewUrl: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=100',
       isUnread: true
@@ -91,7 +91,7 @@ export const NotificationsPage: React.FC<NotificationsPageProps> = ({
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
         isVerified: true
       },
-      text: 'invited you to a live Battle duel: "Tailwind CSS v4 vs Vanilla CSS Speed-Coding"',
+      text: 'invited you to a live Battle duel: "Virat Kohli vs Rohit Sharma Aura Battle 👑"',
       timestamp: '2h',
       isUnread: true,
       battleJoined: null
@@ -111,7 +111,7 @@ export const NotificationsPage: React.FC<NotificationsPageProps> = ({
         displayName: 'Sarcastic Boy',
         avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
       },
-      text: 'mentioned you: "@react_dev_99 write cleaner typescript code mate, Next.js server actions are Satisfying!"',
+      text: 'mentioned you: "@RoastMaster_99 Virat won the game single handedly, Rohit fans crying in corner! 😂🏏"',
       timestamp: '1d',
       isUnread: false
     }
