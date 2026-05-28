@@ -4,6 +4,7 @@
   --background: #0B0B12;
   --foreground: #FFFFFF;
   --card: #12131C;
+  --card-elevated: #181924;
   --purple: #7C3AED;
   --pink: #FF2E93;
   --orange: #FF8A00;
@@ -15,6 +16,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-card-elevated: var(--card-elevated);
   --color-purple: var(--purple);
   --color-pink: var(--pink);
   --color-orange: var(--orange);
@@ -71,25 +73,7 @@ body {
   box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
 }
 
-/* Custom neon glows */
-.glow-purple {
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
-}
-
-.glow-pink {
-  box-shadow: 0 0 15px rgba(255, 46, 147, 0.4);
-}
-
-.glow-orange {
-  box-shadow: 0 0 15px rgba(255, 138, 0, 0.4);
-}
-
-.border-glow-purple:focus-within {
-  border-color: var(--purple);
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
-}
-
-/* Hide scrollbars but keep functionality */
+/* Custom scrollbars */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -98,7 +82,6 @@ body {
   scrollbar-width: none;
 }
 
-/* Custom modern scrollbar for desktop */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -114,29 +97,6 @@ body {
   background: rgba(255, 46, 147, 0.5);
 }
 
-/* TikTok Fullscreen Snap scroll */
-.tiktok-container {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
-}
-
-.tiktok-slide {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-/* Story gradient animations */
-@keyframes border-rotate {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.story-border-gradient {
-  background: linear-gradient(45deg, var(--pink), var(--purple), var(--orange));
-}
-
 .text-gradient {
   background: linear-gradient(135deg, #FF2E93 0%, #7C3AED 50%, #FF8A00 100%);
   -webkit-background-clip: text;
@@ -144,14 +104,15 @@ body {
 }
 
 /* ============================================================== */
-/* ☀️ LIGHT THEME ADAPTER FOR INSTAGRAM-LIKE MINIMAL UI */
+/* ☀️ LIGHT THEME ADAPTER - 100% SPEC COMPLIANT WITH LIGHT MODE UI */
 /* ============================================================== */
 :root.light {
   --background: #F5F5F5;
   --foreground: #111111;
   --card: #FFFFFF;
+  --card-elevated: #FAFAFA;
   --text: #111111;
-  --gray-text: #71717A;
+  --gray-text: #6B7280;
 }
 
 :root.light body {
@@ -159,102 +120,60 @@ body {
   color: #111111 !important;
 }
 
-/* Text overrides */
-:root.light .text-white {
-  color: #111111 !important;
-}
-:root.light .text-white\/90 {
-  color: rgba(17, 17, 17, 0.9) !important;
-}
-:root.light .text-white\/95 {
-  color: rgba(17, 17, 17, 0.95) !important;
-}
-:root.light .text-white\/80 {
-  color: rgba(17, 17, 17, 0.8) !important;
-}
-:root.light .text-white\/90.text-gradient {
-  background: linear-gradient(135deg, #FF2E93 0%, #7C3AED 50%, #FF8A00 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-/* Background overrides */
+/* 1. Page Background Adapters */
+:root.light .bg-background,
 :root.light .bg-\[\#0B0B12\] {
   background-color: #F5F5F5 !important;
 }
-:root.light .bg-\[\#12131C\] {
+
+/* 2. Card Background Adapters (Feed cards) */
+:root.light .bg-card,
+:root.light .bg-\[\#12131C\],
+:root.light .bg-\[\#0B0C10\] {
   background-color: #FFFFFF !important;
 }
-:root.light .bg-\[\#1A1D29\] {
-  background-color: #EBEBEF !important;
-}
-:root.light .bg-\[\#0B0B12\]\/85 {
-  background-color: rgba(245, 245, 245, 0.85) !important;
-}
-:root.light .bg-white\/5 {
-  background-color: rgba(0, 0, 0, 0.03) !important;
-}
-:root.light .bg-white\/10 {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-}
-:root.light .bg-white\/\[0\.01\] {
-  background-color: rgba(0, 0, 0, 0.01) !important;
-}
-:root.light .bg-white\/\[0\.02\] {
-  background-color: rgba(0, 0, 0, 0.02) !important;
-}
-:root.light .bg-white\/\[0\.05\] {
-  background-color: rgba(0, 0, 0, 0.04) !important;
-}
-:root.light .bg-black\/20 {
-  background-color: rgba(0, 0, 0, 0.03) !important;
-}
-:root.light .bg-black\/25 {
-  background-color: rgba(0, 0, 0, 0.04) !important;
-}
-:root.light .bg-black\/30 {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-}
-:root.light .bg-black\/40 {
-  background-color: rgba(0, 0, 0, 0.08) !important;
-}
-:root.light .bg-black\/60 {
-  background-color: rgba(0, 0, 0, 0.12) !important;
-}
 
-/* Border overrides */
-:root.light .border-white\/5 {
-  border-color: rgba(0, 0, 0, 0.05) !important;
-}
-:root.light .border-white\/8 {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-:root.light .border-white\/10 {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-:root.light .border-purple\/35 {
-  border-color: rgba(124, 58, 237, 0.35) !important;
-}
-:root.light .border-pink\/35 {
-  border-color: rgba(255, 46, 147, 0.35) !important;
-}
-
-/* Glassmorphism overrides */
-:root.light .glass-effect {
-  background: rgba(255, 255, 255, 0.75) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
+/* 3. Elevated Card Background Adapters */
+:root.light .bg-card-elevated,
+:root.light .glass-effect,
 :root.light .glass-effect-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 248, 250, 0.95) 100%) !important;
-  border-color: rgba(0, 0, 0, 0.06) !important;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06) !important;
+  background-color: #FAFAFA !important;
+  background: #FAFAFA !important;
 }
-:root.light .glass-input {
-  background: rgba(0, 0, 0, 0.03) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
+
+/* Nesting support for elevated bubbles inside feed cards (like Top Comments) */
+:root.light .bg-\[\#12131C\] .bg-\[\#12131C\],
+:root.light .bg-card .bg-card,
+:root.light .bg-\[\#0B0C10\] .bg-\[\#12131C\],
+:root.light .bg-card-elevated .bg-card-elevated {
+  background-color: #FAFAFA !important;
+  background: #FAFAFA !important;
+}
+
+/* 4. Text Color Overrides */
+:root.light .text-white,
+:root.light .text-white\/95,
+:root.light .text-white\/90,
+:root.light .text-white\/80,
+:root.light .text-white\/75 {
   color: #111111 !important;
 }
-:root.light .glass-input:focus {
-  border-color: var(--purple) !important;
+
+:root.light .text-gray-text,
+:root.light .text-gray-text\/75,
+:root.light .text-gray-text\/60 {
+  color: #6B7280 !important;
 }
 
+/* 5. Border Color Overrides */
+:root.light .border-white\/5,
+:root.light .border-white\/8,
+:root.light .border-white\/10 {
+  border-color: #E5E7EB !important;
+}
+
+/* 6. Specific adjustments for SVG line colors and icons in light mode navigation */
+:root.light .stroke-white,
+:root.light .text-gray-text:hover {
+  color: #111111 !important;
+}

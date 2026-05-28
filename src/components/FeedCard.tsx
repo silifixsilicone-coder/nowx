@@ -145,7 +145,7 @@ export const FeedCard: React.FC<FeedCardProps> = ({ post, onLike, onCommentClick
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
-      className="bg-[#0B0C10] border border-white/5 rounded-3xl w-full max-w-xl mx-auto overflow-hidden shadow-2xl p-4.5 space-y-3.5 relative"
+      className="bg-card border border-white/5 rounded-3xl w-full max-w-xl mx-auto overflow-hidden shadow-2xl p-4.5 space-y-3.5 relative"
     >
       
       {/* Decorative subtle border outline glow */}
